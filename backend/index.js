@@ -16,10 +16,8 @@ app.use(cors());
 const mongoUri = process.env.MONGO_URI;
 const port = process.env.PORT;
 
-// routes
-const authRoute = require('./routes/auth.route');
-
-app.use("/api/auth", authRoute);
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(mongoUri)
     .then(() => {
