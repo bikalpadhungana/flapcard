@@ -10,10 +10,10 @@ export default function Navbar() {
 
         <ul className="flex gap-4">
           <Link to="/sign-in">
-            <li className="text-black bg-green-400 hover:underline cursor-pointer border-4 rounded-full border-green-400 p-2 w-24 text-center">Sign in</li>
+            <li className="text-black bg-green-400 hover:opacity-75 transition-all duration-500 cursor-pointer border-4 rounded-full border-green-400 p-2 w-24 text-center">Sign in</li>
           </Link>
-          <Link to="/">
-            <li className="text-black bg-green-400 hover:underline cursor-pointer border-4 rounded-full border-green-400 p-2 w-24 text-center">Sign up</li>
+          <Link to="/sign-up">
+            <li className="text-black bg-green-400 hover:opacity-75 transition-all duration-500 cursor-pointer border-4 rounded-full border-green-400 p-2 w-24 text-center">Sign up</li>
           </Link>
         </ul>
       </div>
