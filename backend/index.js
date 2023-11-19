@@ -16,8 +16,22 @@ app.use(cors());
 const mongoUri = process.env.MONGO_URI;
 const port = process.env.PORT;
 
-app.use(express.json());
-app.use(cookieParser());
+// routes
+const authRoute = require('./routes/auth.route');
+
+app.use('/api/auth', authRoute);
+
+// error handling middleware
+app.use((error, req, res, next) => {
+    const statusCode = error.statusCode || 500;
+    const message = error.message || "Internal Server Error";
+
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
 
 mongoose.connect(mongoUri)
     .then(() => {
