@@ -13,6 +13,12 @@ const signup = async (req, res, next) => {
 
     const { username, email, password } = req.body;
 
+    const emailExists = await User.findOne({ email });
+
+    if (emailExists) {
+        return next(errorHandler(400, "Email already registered"));
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashPass = await bcrypt.hash(password, salt);
 
