@@ -62,7 +62,8 @@ const signin = async (req, res, next) => {
         const token = createToken(user._id);
         const { password: userPass, ...restUserInfo } = user._doc;
 
-        res.cookie("access_token", token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+        // res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+        res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
             
     } catch (error) {
         next(error);
