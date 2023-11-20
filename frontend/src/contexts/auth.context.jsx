@@ -1,4 +1,4 @@
-import { useReducer, createContext } from "react";
+import { useReducer, createContext, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 export const AuthContext = createContext();
@@ -32,6 +32,14 @@ export const AuthContextProvider = ({ children }) => {
         error: null,
         loading: false,
     });
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            dispatch({ type: 'SIGN_IN_SUCCESS', payload: user });
+        }
+    }, []);
 
     return (
         <AuthContext.Provider value={{ ...state, dispatch }}>

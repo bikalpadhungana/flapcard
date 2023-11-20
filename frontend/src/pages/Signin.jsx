@@ -40,7 +40,8 @@ export default function Signin() {
       }
 
       dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData });
-      navigate('/');
+      localStorage.setItem('user', JSON.stringify(resData));
+      navigate('/home');
 
     } catch (error) {
       dispatch({ type: 'SIGN_IN_FAILURE', payload: error });
