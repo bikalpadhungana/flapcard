@@ -20,12 +20,12 @@ const signup = async (req, res, next) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(password, salt);
+    const hashedPass = await bcrypt.hash(password, salt);
 
     const newUser = new User({
         username,
         email,
-        password: hashPass,
+        password: hashedPass,
     });
 
     try {
@@ -69,6 +69,42 @@ const signin = async (req, res, next) => {
     }
 }
 
+const google = async (req, res, next) => {
+
+    const { username, email, userPhoto } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (user) {
+            const token = createToken(user._id);
+            const { password, ...restUserInfo } = user._doc;
+
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+        } else {
+            const userGeneratePassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const salt = await bcrypt.genSalt(10);
+            const hashedPass = await bcrypt.hash(userGeneratePassword, salt);
+
+            const newUser = new User({
+                username,
+                email,
+                password: hashedPass,
+                user_photo: userPhoto
+            });
+
+            await newUser.save();
+
+            const token = createToken(newUser._id);
+            const { password, ...restUserInfo } = newUser._doc;
+
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
 const signout = (req, res, next) => {
     try {
         res.clearCookie('access_token');
@@ -81,5 +117,6 @@ const signout = (req, res, next) => {
 module.exports = {
     signup,
     signin,
+    google,
     signout
 }
