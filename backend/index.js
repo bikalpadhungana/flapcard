@@ -18,8 +18,10 @@ const port = process.env.PORT;
 
 // routes
 const authRoute = require('./routes/auth.route');
+const userRoute = require('./routes/user.route');
 
 app.use('/api/auth', authRoute);
+app.use('/api/user', userRoute);
 
 // error handling middleware
 app.use((error, req, res, next) => {
