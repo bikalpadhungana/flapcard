@@ -34,7 +34,7 @@ const signup = async (req, res, next) => {
         const { password: userPass, ...restUserInfo } = user._doc;
 
         if (user) {
-            res.status(200).json({ user: restUserInfo });
+            res.status(200).json( restUserInfo);
         }
     } catch (error) {
         next(error);
@@ -62,7 +62,7 @@ const signin = async (req, res, next) => {
         const token = createToken(user._id);
         const { password: userPass, ...restUserInfo } = user._doc;
 
-        res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+        res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
             
     } catch (error) {
         next(error);
@@ -80,7 +80,7 @@ const google = async (req, res, next) => {
             const token = createToken(user._id);
             const { password, ...restUserInfo } = user._doc;
 
-            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
         } else {
             const userGeneratePassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const salt = await bcrypt.genSalt(10);
@@ -98,7 +98,7 @@ const google = async (req, res, next) => {
             const token = createToken(newUser._id);
             const { password, ...restUserInfo } = newUser._doc;
 
-            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ user: restUserInfo });
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
         }
     } catch (error) {
         next(error);

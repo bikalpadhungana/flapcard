@@ -22,10 +22,12 @@ export const AuthReducer = (state, action) => {
             }
         case 'UPDATE_USER_START':
             return {
+                ...state,
                 loading: true
             }
         case 'UPDATE_USER_FAILURE':
             return {
+                ...state,
                 loading: false,
                 error: action.payload
             }
