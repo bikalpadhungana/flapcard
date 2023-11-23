@@ -9,7 +9,7 @@ export default function Navbar() {
     <header className="bg-green-100 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-6">
         <Link to="/home">
-          <h1 className="font-bold text-sm sm:text-3xl text-navbar">SAV</h1>
+          <h1 className="font-bold text-sm sm:text-3xl text-navbar">Flap</h1>
         </Link>
 
         {!user &&
