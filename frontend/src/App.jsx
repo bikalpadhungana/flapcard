@@ -20,6 +20,7 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="/" element={!user ? <Navigate to="/sign-in" /> : <Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/sign-in" />} />
         <Route path="/sign-in" element={!user ? <Signin /> : <Navigate to="/home" />} />

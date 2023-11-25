@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import OAuth from "../components/google.auth";
-import { useCookies } from "react-cookie";
 
 // user hooks
 import { useAuthContext } from "../hooks/use.auth.context";
@@ -10,7 +9,6 @@ export default function Signin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [cookie, setCookie] = useCookies(["access_token"]);
 
   const { loading, error, dispatch } = useAuthContext();
 
@@ -44,8 +42,8 @@ export default function Signin() {
 
       dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData.restUserInfo });
       localStorage.setItem('user', JSON.stringify(resData.restUserInfo));
-      setCookie("access_token", resData.token, { httpOnly: true });
-      
+      localStorage.setItem('access_token', JSON.stringify(resData.token));
+
       navigate('/home');
 
     } catch (error) {

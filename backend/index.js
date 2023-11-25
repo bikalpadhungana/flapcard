@@ -17,7 +17,7 @@ const corsOpts = {
 
   allowedHeaders: [
     'Content-Type',
-    'Set-Cookie',
+    'Authorization',
   ],
 };
 

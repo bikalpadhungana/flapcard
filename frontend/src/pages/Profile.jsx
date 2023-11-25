@@ -13,6 +13,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  
+  const access_token = JSON.parse(localStorage.getItem("access_token"));
 
   useEffect(() => {
     if (file) {
@@ -56,7 +58,8 @@ export default function Profile() {
       const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access_token}`
         },
         body: JSON.stringify(formData)
       });
@@ -83,6 +86,9 @@ export default function Profile() {
 
       const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
       });
 
       const resData = await response.json();
