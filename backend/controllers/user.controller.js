@@ -59,12 +59,18 @@ const updateUser = async (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
-    if (req.user._id !== req.params.id) {
+    if (req.user._id != req.params.id) {
         return next(errorHandler(401, 'ID invalid'));
     }
 
     try {
-        await User.findByIdAndDelete(req.params.id);
+        // await User.findByIdAndDelete(req.params.id);
+        await pool.query(`
+        DELETE
+        FROM
+        user
+        WHERE
+        id=?`, [req.params.id]);
 
         res.clearCookie('access_token');
         res.status(200).json({message: "User deleted"});
