@@ -13,7 +13,7 @@ const signup = async (req, res, next) => {
 
     const { username, email, password } = req.body;
 
-    const [emailExists] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
+    const [emailExists] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
     if (emailExists.length !== 0) {
         return next(errorHandler(400, "Email already registered"));
@@ -29,7 +29,7 @@ const signup = async (req, res, next) => {
         VALUES(?, ?, ?)`, [username, email, hashedPass]);
 
         const resultId = result.insertId;
-        const [user] = await pool.query(`SELECT * FROM user WHERE id=${resultId}`);
+        const [user] = await pool.query(`SELECT * FROM user WHERE id=?`, [resultId]);
 
         const { password: userPass, ...restUserInfo } = user[0];
 
@@ -47,7 +47,7 @@ const signin = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const [user] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
+        const [user] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
         if (user.length === 0) {
             return next(errorHandler(404, "User not found"));
@@ -74,7 +74,7 @@ const google = async (req, res, next) => {
     const { username, email, userPhoto } = req.body;
 
     try {
-        const [user] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
+        const [user] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
         if (user.length !== 0) {
             const token = createToken(user[0].id);
@@ -92,7 +92,7 @@ const google = async (req, res, next) => {
             VALUES(?, ?, ?, ?)`, [username, email, hashedPass, userPhoto]);
 
             const resultId = result.insertId;
-            const [user] = await pool.query(`SELECT * FROM user WHERE id=${resultId}`);
+            const [user] = await pool.query(`SELECT * FROM user WHERE id=?`, [resultId]);
 
             const token = createToken(user[0].id);
             const { password, ...restUserInfo } = user[0];
