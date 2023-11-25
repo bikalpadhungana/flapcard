@@ -79,39 +79,7 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
-const test = async (req, res, next) => {
-    const user = await getSingleUser(2);
-
-    if (user.length === 0) {
-        return next(errorHandler(404, "User not found"));
-    }
-
-    console.log(user[0].password);
-
-    res.status(200).json(user);
-}
-
-const test2 = async (req, res, next) => {
-
-    const username = "Test";
-    const email = "test@gmail.com";
-    const password = "test";
-    const user_photo = "test.com";
-
-    try {
-        const [user] = await pool.query(`INSERT INTO user(username, email, password, user_photo) 
-        VALUES(?, ?, ?, ?)`, [username, email, password, user_photo]);
-
-        res.status(200).json(user.insertId);
-    } catch (error) {
-        next(error);
-    }
-
-}
-
 module.exports = {
     updateUser,
-    deleteUser,
-    test,
-    test2
+    deleteUser
 }
