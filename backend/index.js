@@ -7,9 +7,23 @@ require('dotenv').config();
 // express app
 const app = express();
 
+const corsOpts = {
+  origin: '*',
+
+  methods: [
+    'GET',
+    'POST',
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+    'Set-Cookie',
+  ],
+};
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOpts));
 
 // environment variables
 const port = process.env.PORT;
@@ -35,4 +49,4 @@ app.use((error, req, res, next) => {
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
-})
+});

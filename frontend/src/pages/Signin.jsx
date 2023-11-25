@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import OAuth from "../components/google.auth";
+import { useCookies } from "react-cookie";
 
 // user hooks
 import { useAuthContext } from "../hooks/use.auth.context";
@@ -9,6 +10,7 @@ export default function Signin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookie, setCookie] = useCookies(["access_token"]);
 
   const { loading, error, dispatch } = useAuthContext();
 
@@ -25,7 +27,7 @@ export default function Signin() {
     }
 
     try {
-      const res = await fetch('/api/auth/signin', {
+      const res = await fetch('https://backend-flap.esainnovation.com/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -40,8 +42,10 @@ export default function Signin() {
         return;
       }
 
-      dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData });
-      localStorage.setItem('user', JSON.stringify(resData));
+      dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData.restUserInfo });
+      localStorage.setItem('user', JSON.stringify(resData.restUserInfo));
+      setCookie("access_token", resData.token, { httpOnly: true });
+      
       navigate('/home');
 
     } catch (error) {
@@ -51,11 +55,11 @@ export default function Signin() {
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
+      <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input type='text' placeholder='Email' className='border p-3 rounded-lg' id='email' onChange={(e) => {setEmail(e.target.value)}} />
         <input type='password' placeholder='Password' className='border p-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
-        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign Up'}</button>
+        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign In'}</button>
         <OAuth></OAuth>
       </form>
 

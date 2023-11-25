@@ -1,4 +1,3 @@
-const User = require('../models/user.model');
 const pool = require('../utilities/database.connection');
 const bcrypt = require('bcrypt');
 const errorHandler = require('../middlewares/error.handler');

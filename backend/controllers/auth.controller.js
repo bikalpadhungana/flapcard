@@ -62,7 +62,8 @@ const signin = async (req, res, next) => {
         const token = createToken(user[0]._id);
         const { password: userPass, ...restUserInfo } = user[0];
 
-        res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
+        // res.cookie('access_token', token, { httpOnly: true });
+        res.status(200).json({ restUserInfo, token });
             
     } catch (error) {
         next(error);
@@ -80,7 +81,8 @@ const google = async (req, res, next) => {
             const token = createToken(user[0]._id);
             const { password, ...restUserInfo } = user[0];
 
-            res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
+            // res.cookie('access_token', token, { httpOnly: true });
+            res.status(200).json({ restUserInfo, token });
         } else {
             const userGeneratePassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const salt = await bcrypt.genSalt(10);
@@ -96,8 +98,9 @@ const google = async (req, res, next) => {
 
             const token = createToken(user[0]._id);
             const { password, ...restUserInfo } = user[0];
-
-            res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
+            
+            // res.cookie('access_token', token, { httpOnly: true });
+            res.status(200).json({ restUserInfo, token });
         }
     } catch (error) {
         next(error);

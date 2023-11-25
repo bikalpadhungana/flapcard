@@ -53,8 +53,8 @@ export default function Profile() {
     try {
       dispatch({ type: 'UPDATE_USER_START' });
 
-      const response = await fetch(`/api/user/update/${user._id}`, {
-        method: 'PATCH',
+      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -81,7 +81,7 @@ export default function Profile() {
     try {
       dispatch({ type: 'DELETE_USER_START' });
 
-      const response = await fetch(`/api/user/delete/${user._id}`, {
+      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
         method: 'DELETE',
       });
 
@@ -104,7 +104,7 @@ export default function Profile() {
     try {
       dispatch({ type: 'SIGN_OUT_START' });
 
-      const response = await fetch('/api/auth/signout');
+      const response = await fetch('https://backend-flap.esainnovation.com/api/auth/signout');
 
       const resData = await response.json();
 

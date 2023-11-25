@@ -6,8 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://flap.esainnovation.com',
-         secure: true
+        target: 'https://backend-flap.esainnovation.com',
+         secure: false
       }
     }
   },
