@@ -38,7 +38,7 @@ const updateUser = async (req, res, next) => {
             SET
             ${validVariables[i]}=?
             WHERE
-            id=?`, [eval(validVariables[i]), userId]);
+            _id=?`, [eval(validVariables[i]), userId]);
         }
 
         const [user] = await pool.query(`
@@ -46,7 +46,7 @@ const updateUser = async (req, res, next) => {
         FROM
         user
         WHERE
-        id=?`, [userId]);
+        _id=?`, [userId]);
 
         const { password: userPass, ...restUserInfo } = user[0];
 
@@ -63,13 +63,12 @@ const deleteUser = async (req, res, next) => {
     }
 
     try {
-        // await User.findByIdAndDelete(req.params.id);
         await pool.query(`
         DELETE
         FROM
         user
         WHERE
-        id=?`, [req.params.id]);
+        _id=?`, [req.params.id]);
 
         res.clearCookie('access_token');
         res.status(200).json({message: "User deleted"});

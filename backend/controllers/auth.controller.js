@@ -29,7 +29,7 @@ const signup = async (req, res, next) => {
         VALUES(?, ?, ?)`, [username, email, hashedPass]);
 
         const resultId = result.insertId;
-        const [user] = await pool.query(`SELECT * FROM user WHERE id=?`, [resultId]);
+        const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
         const { password: userPass, ...restUserInfo } = user[0];
 
@@ -59,7 +59,7 @@ const signin = async (req, res, next) => {
             return next(errorHandler(401, "Invalid Password"));
         }
 
-        const token = createToken(user[0].id);
+        const token = createToken(user[0]._id);
         const { password: userPass, ...restUserInfo } = user[0];
 
         res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
@@ -77,7 +77,7 @@ const google = async (req, res, next) => {
         const [user] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
         if (user.length !== 0) {
-            const token = createToken(user[0].id);
+            const token = createToken(user[0]._id);
             const { password, ...restUserInfo } = user[0];
 
             res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
@@ -92,9 +92,9 @@ const google = async (req, res, next) => {
             VALUES(?, ?, ?, ?)`, [username, email, hashedPass, userPhoto]);
 
             const resultId = result.insertId;
-            const [user] = await pool.query(`SELECT * FROM user WHERE id=?`, [resultId]);
+            const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
-            const token = createToken(user[0].id);
+            const token = createToken(user[0]._id);
             const { password, ...restUserInfo } = user[0];
 
             res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
