@@ -1,31 +1,55 @@
 const User = require('../models/user.model');
+const pool = require('../utilities/database.connection');
 const bcrypt = require('bcrypt');
 const errorHandler = require('../middlewares/error.handler');
+const { getSingleUser } = require('../utilities/database.queries');
 
 const updateUser = async (req, res, next) => {
 
-    const { username, email, password, user_photo } = req.body;
+    const { username, email, user_photo } = req.body;
+    let { password } = req.body;
+    const validVariables = [];
 
-    if (req.user._id !== req.params.id) {
+    if (req.user._id != req.params.id) {
         return next(errorHandler(401, "ID invalid!!!"));
     }
+    const userId = req.params.id;
 
     try {
+        if (username) {
+            validVariables.push("username");
+        }
+        if (email) {
+            validVariables.push("email");
+        }
         if (password) {
             const salt = await bcrypt.genSalt(10);
             password = await bcrypt.hash(req.body.password, salt);
+
+            validVariables.push("password");
+        }
+        if (user_photo) {
+            validVariables.push("user_photo");
         }
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, {
-            $set: {
-                username,
-                email,
-                password,
-                user_photo
-            }
-        }, { new: true });
+        for (i = 0; i < validVariables.length; i++) {
+            await pool.query(`
+            UPDATE
+            user
+            SET
+            ${validVariables[i]}=?
+            WHERE
+            id=?`, [eval(validVariables[i]), userId]);
+        }
 
-        const { password: userPass, ...restUserInfo } = updatedUser._doc;
+        const [user] = await pool.query(`
+        SELECT *
+        FROM
+        user
+        WHERE
+        id=?`, [userId]);
+
+        const { password: userPass, ...restUserInfo } = user[0];
 
         res.status(200).json( restUserInfo );
 
@@ -49,7 +73,39 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+const test = async (req, res, next) => {
+    const user = await getSingleUser(2);
+
+    if (user.length === 0) {
+        return next(errorHandler(404, "User not found"));
+    }
+
+    console.log(user[0].password);
+
+    res.status(200).json(user);
+}
+
+const test2 = async (req, res, next) => {
+
+    const username = "Test";
+    const email = "test@gmail.com";
+    const password = "test";
+    const user_photo = "test.com";
+
+    try {
+        const [user] = await pool.query(`INSERT INTO user(username, email, password, user_photo) 
+        VALUES(?, ?, ?, ?)`, [username, email, password, user_photo]);
+
+        res.status(200).json(user.insertId);
+    } catch (error) {
+        next(error);
+    }
+
+}
+
 module.exports = {
     updateUser,
-    deleteUser
+    deleteUser,
+    test,
+    test2
 }

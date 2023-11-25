@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const pool = require('../utilities/database.connection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
@@ -13,28 +13,28 @@ const signup = async (req, res, next) => {
 
     const { username, email, password } = req.body;
 
-    const emailExists = await User.findOne({ email });
+    const [emailExists] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
 
-    if (emailExists) {
+    if (emailExists.length !== 0) {
         return next(errorHandler(400, "Email already registered"));
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, salt);
 
-    const newUser = new User({
-        username,
-        email,
-        password: hashedPass,
-    });
-
     try {
-        const user = await newUser.save();
+        const [result] = await pool.query(`
+        INSERT INTO
+        user(username, email, password)
+        VALUES(?, ?, ?)`, [username, email, hashedPass]);
 
-        const { password: userPass, ...restUserInfo } = user._doc;
+        const resultId = result.insertId;
+        const [user] = await pool.query(`SELECT * FROM user WHERE id=${resultId}`);
 
-        if (user) {
-            res.status(200).json( restUserInfo);
+        const { password: userPass, ...restUserInfo } = user[0];
+
+        if (user[0]) {
+            res.status(200).json(restUserInfo);
         }
     } catch (error) {
         next(error);
@@ -47,20 +47,20 @@ const signin = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const [user] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
 
-        if (!user) {
+        if (user.length === 0) {
             return next(errorHandler(404, "User not found"));
         }
 
-        const matchPassword = await bcrypt.compare(password, user.password);
+        const matchPassword = await bcrypt.compare(password, user[0].password);
 
         if (!matchPassword) {
             return next(errorHandler(401, "Invalid Password"));
         }
 
-        const token = createToken(user._id);
-        const { password: userPass, ...restUserInfo } = user._doc;
+        const token = createToken(user[0].id);
+        const { password: userPass, ...restUserInfo } = user[0];
 
         res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
             
@@ -74,11 +74,11 @@ const google = async (req, res, next) => {
     const { username, email, userPhoto } = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const [user] = await pool.query(`SELECT * FROM user WHERE email='${email}'`);
 
-        if (user) {
-            const token = createToken(user._id);
-            const { password, ...restUserInfo } = user._doc;
+        if (user.length !== 0) {
+            const token = createToken(user[0].id);
+            const { password, ...restUserInfo } = user[0];
 
             res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
         } else {
@@ -86,17 +86,16 @@ const google = async (req, res, next) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPass = await bcrypt.hash(userGeneratePassword, salt);
 
-            const newUser = new User({
-                username,
-                email,
-                password: hashedPass,
-                user_photo: userPhoto
-            });
+            const [result] = await pool.query(`
+            INSERT INTO
+            user(username, email, password, user_photo)
+            VALUES(?, ?, ?, ?)`, [username, email, hashedPass, userPhoto]);
 
-            await newUser.save();
+            const resultId = result.insertId;
+            const [user] = await pool.query(`SELECT * FROM user WHERE id=${resultId}`);
 
-            const token = createToken(newUser._id);
-            const { password, ...restUserInfo } = newUser._doc;
+            const token = createToken(user[0].id);
+            const { password, ...restUserInfo } = user[0];
 
             res.cookie('access_token', token, { httpOnly: true }).status(200).json( restUserInfo );
         }
