@@ -56,7 +56,7 @@ export default function Profile() {
       dispatch({ type: 'UPDATE_USER_START' });
 
       const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${access_token}`
