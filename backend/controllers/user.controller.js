@@ -4,7 +4,7 @@ const errorHandler = require('../middlewares/error.handler');
 
 const updateUser = async (req, res, next) => {
 
-    const { username, email, user_photo } = req.body;
+    const { username, email, user_photo, phone_number, organization } = req.body;
     let { password } = req.body;
     const validVariables = [];
 
@@ -28,6 +28,12 @@ const updateUser = async (req, res, next) => {
         }
         if (user_photo) {
             validVariables.push("user_photo");
+        }
+        if (phone_number) {
+            validVariables.push("phone_number");
+        }
+        if (organization) {
+            validVariables.push("organization");
         }
 
         for (i = 0; i < validVariables.length; i++) {
