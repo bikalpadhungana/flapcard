@@ -33,9 +33,11 @@ const port = process.env.PORT;
 // routes
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
+const userInfoRoute = require('./routes/user.info.route');
 
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
+app.use('/api/user-info', userInfoRoute);
 
 // error handling middleware
 app.use((error, req, res, next) => {
