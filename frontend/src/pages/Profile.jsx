@@ -60,7 +60,7 @@ export default function Profile() {
         return dispatch({ type: 'UPDATE_USER_FAILURE', payload: 'Phone number must be 10 digits' });
       }
 
-      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
+      const response = await fetch(`http://localhost:3000/api/user/update/${user._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export default function Profile() {
     try {
       dispatch({ type: 'DELETE_USER_START' });
 
-      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
+      const response = await fetch(`http://localhost:3000/api/user/delete/${user._id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${access_token}`
@@ -115,7 +115,7 @@ export default function Profile() {
     try {
       dispatch({ type: 'SIGN_OUT_START' });
 
-      const response = await fetch('https://backend-flap.esainnovation.com/api/auth/signout');
+      const response = await fetch('http://localhost:3000/api/auth/signout');
 
       const resData = await response.json();
 
@@ -126,6 +126,7 @@ export default function Profile() {
 
       dispatch({ type: 'SIGN_OUT_SUCCESS' });
       localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
 
     } catch (error) {
       dispatch({ type: 'SIGN_OUT_FAILURE', payload: error.message });
@@ -134,7 +135,7 @@ export default function Profile() {
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className='text-3xl font-semibold text-center mt-2 mb-5'>Profile</h1>
+      <h1 className='text-3xl font-semibold text-center mt-2 mb-4'>Profile</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*" />
@@ -147,7 +148,7 @@ export default function Profile() {
         <input type="password" placeholder="password" id="password" className="border py-2 px-4 rounded-lg" onChange={handleChange} />
         <input type="number" defaultValue={user.phone_number} placeholder="phone number" id="phone_number" className="border py-2 px-4 rounded-lg appearance-none" onChange={handleChange} />
         <input type="text" defaultValue={user.organization} placeholder="organization" id="organization" className="border py-2 px-4 rounded-lg" onChange={handleChange} />
-        <button disabled={loading} className="bg-slate-700 text-white rounded-lg uppercase p-3 hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
+        <button disabled={loading} className="bg-navbar text-black rounded-lg uppercase p-3 hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
       </form>
 
       <div className="flex justify-between mt-5">
