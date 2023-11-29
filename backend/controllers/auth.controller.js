@@ -31,7 +31,7 @@ const signup = async (req, res, next) => {
         const resultId = result.insertId;
         const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
-        const tokenId = jwt.sign({ id: user[0]._id }, process.env.JWT_SECRET_KEY);
+        const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
 
         const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
 

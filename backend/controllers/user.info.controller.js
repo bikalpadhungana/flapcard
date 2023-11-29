@@ -1,10 +1,17 @@
 const pool = require('../utilities/database.connection');
+const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 
 const getUserInfo = async (req, res, next) => {
-    const { id } = req.params;
+    let { id } = req.params;
+    
+    jwt.verify(id, process.env.JWT_SECRET_KEY, (err, userId) => {
+        if (err) {
+            return next(errorHandler(400, "Id is not valid"));
+        }
 
-    console.log(id);
+        id = userId.id;
+    })
     
     try {
         const [user] = await pool.query(`
@@ -19,7 +26,7 @@ const getUserInfo = async (req, res, next) => {
             return next(errorHandler(404, 'User not found'));
         }
 
-        const { password, ...restUserInfo } = user[0];
+        const { password, userInfoUrl, ...restUserInfo } = user[0];
 
         res.status(200).json(restUserInfo);
     } catch (error) {
