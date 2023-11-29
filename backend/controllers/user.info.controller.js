@@ -3,6 +3,8 @@ const errorHandler = require('../middlewares/error.handler');
 
 const getUserInfo = async (req, res, next) => {
     const { id } = req.params;
+
+    console.log(id);
     
     try {
         const [user] = await pool.query(`
@@ -13,7 +15,7 @@ const getUserInfo = async (req, res, next) => {
         WHERE
         _id=?`, [id]);
 
-        if (!user) {
+        if (user.length === 0) {
             return next(errorHandler(404, 'User not found'));
         }
 

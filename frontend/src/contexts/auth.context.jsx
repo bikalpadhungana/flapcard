@@ -78,6 +78,7 @@ export const AuthContextProvider = ({ children }) => {
         user: null,
         error: null,
         loading: false,
+        loadingUrl: false
     });
 
     useEffect(() => {
