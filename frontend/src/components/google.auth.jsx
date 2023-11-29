@@ -14,8 +14,6 @@ export default function OAuth() {
 
         const result = await signInWithPopup(auth, provider);
 
-        console.log(result);
-
         const response = await fetch('https://backend-flap.esainnovation.com/api/auth/google', {
             method: 'POST',
             headers: {
@@ -26,7 +24,12 @@ export default function OAuth() {
 
         const resData = await response.json();
 
-        dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData });
+        if (resData.success === false) {
+            dispatch({ type: 'SIGN_IN_FAILURE', payload: resData.message });
+            return;
+        }
+
+        dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData.restUserInfo });
         localStorage.setItem('user', JSON.stringify(resData.restUserInfo));
         localStorage.setItem('access_token', JSON.stringify(resData.token));
 
