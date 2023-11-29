@@ -4,22 +4,36 @@ import { useEffect, useState } from "react";
 export default function UserInfo() {
     const { id } = useParams();
 
-    const [userInfo, setUserInfo] = useState("");
+    const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
 
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:3000/api/user-info/${id}`);
+            const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
 
             const resData = await response.json();
 
-            setUserInfo(JSON.stringify(resData));
+            setUserInfo(resData);
         };
 
         fetchData();
         
     }, [id]);
+
+
   return (
-    <div>{userInfo}</div>
+      <div className="p-8 max-w-lg mx-auto border-2 border-navbar my-5 rounded-lg">
+          <div className="flex flex-col gap-4">
+            <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
+            <label className="text-sm px-2">Username</label>
+              <input type="text" id="username" defaultValue={userInfo.username} className="border p-3 rounded-lg border-slate-300" readOnly />
+            <label className="text-sm px-2">Email</label>
+              <input type="text" defaultValue={userInfo.email} className="border p-3 rounded-lg border-slate-300" readOnly />
+            <label className="text-sm px-2">Phone Number</label>
+              <input type="number" defaultValue={userInfo.phone_number} className="border p-3 rounded-lg border-slate-300" readOnly />
+             <label className="text-sm px-2">Organization</label> 
+            <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
+        </div>
+    </div>
   )
 }

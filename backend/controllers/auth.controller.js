@@ -32,7 +32,6 @@ const signup = async (req, res, next) => {
         const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
         const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
-
         const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
 
         await pool.query(`
@@ -90,7 +89,7 @@ const google = async (req, res, next) => {
 
         if (user.length !== 0) {
             const token = createToken(user[0]._id);
-            const { password, ...restUserInfo } = user[0];
+            const { password, userInfoUrl, ...restUserInfo } = user[0];
 
             res.status(200).json({ restUserInfo, token });
         } else {
@@ -106,8 +105,19 @@ const google = async (req, res, next) => {
             const resultId = result.insertId;
             const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
+            const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
+            const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
+
+            await pool.query(`
+            UPDATE
+            user
+            SET
+            userInfoUrl=?
+            WHERE
+            _id=?`, [userInfoUrl, user[0]._id]);
+
             const token = createToken(user[0]._id);
-            const { password, ...restUserInfo } = user[0];
+            const { password, userInfoUrl: infoUrl, ...restUserInfo } = user[0];
             
             res.status(200).json({ restUserInfo, token });
         }
