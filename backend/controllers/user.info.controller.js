@@ -3,14 +3,14 @@ const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 
 const getUserInfo = async (req, res, next) => {
-    let { id } = req.params;
+    let { id } = req.query;
     
     jwt.verify(id, process.env.JWT_SECRET_KEY, (err, userId) => {
         if (err) {
             return next(errorHandler(400, "Id is not valid"));
         }
 
-        id = userId.id;
+        id = userId._id;
     })
     
     try {
