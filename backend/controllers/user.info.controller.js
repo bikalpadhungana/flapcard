@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 
 const getUserInfo = async (req, res, next) => {
-    let { id } = req.query;
+    let { id } = req.params;
     
     jwt.verify(id, process.env.JWT_SECRET_KEY, (err, userId) => {
         if (err) {

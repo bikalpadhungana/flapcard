@@ -33,7 +33,7 @@ const signup = async (req, res, next) => {
 
         const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
 
-        const userInfoUrl = `https://flap.esainnovation.com/user-info?userId=${tokenId}`;
+        const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
 
         await pool.query(`
         UPDATE
