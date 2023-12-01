@@ -14,7 +14,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
-  const access_token = JSON.parse(localStorage.getItem("access_token"));
+  const access_token = JSON.parse(sessionStorage.getItem("access_token"));
 
   useEffect(() => {
     if (file) {
@@ -77,7 +77,7 @@ export default function Profile() {
       }
 
       dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData });
-      localStorage.setItem('user', JSON.stringify(resData));
+      sessionStorage.setItem('user', JSON.stringify(resData));
 
       setUpdateSuccess(true);
     } catch (error) {
@@ -104,7 +104,7 @@ export default function Profile() {
       }
 
       dispatch({ type: 'DELETE_USER_SUCCESS' });
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('user');
 
     } catch (error) {
       dispatch({ type: 'DELETE_USER_FAILURE', payload: error.message });
@@ -125,8 +125,8 @@ export default function Profile() {
       }
 
       dispatch({ type: 'SIGN_OUT_SUCCESS' });
-      localStorage.removeItem('user');
-      localStorage.removeItem('access_token');
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('access_token');
 
     } catch (error) {
       dispatch({ type: 'SIGN_OUT_FAILURE', payload: error.message });
