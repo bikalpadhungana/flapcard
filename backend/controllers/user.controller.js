@@ -53,9 +53,11 @@ const updateUser = async (req, res, next) => {
         WHERE
         _id=?`, [userId]);
 
-        const { password: userPass, ...restUserInfo } = user[0];
+        const { password: userPass, userInfoUrl, ...restUserInfo } = user[0];
 
-        res.status(200).json( restUserInfo );
+        const newToken = req.token;
+
+        res.status(200).json({ restUserInfo, newToken });
 
     } catch (error) {
         next(error);

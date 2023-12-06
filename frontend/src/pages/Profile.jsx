@@ -14,7 +14,8 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
-  const access_token = JSON.parse(sessionStorage.getItem("access_token"));
+  const access_token = JSON.parse(sessionStorage.getItem('access_token'));
+  const refresh_token = JSON.parse(sessionStorage.getItem('refresh_token'));
 
   useEffect(() => {
     if (file) {
@@ -64,7 +65,7 @@ export default function Profile() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${access_token}&${refresh_token}`
         },
         body: JSON.stringify(formData)
       });
@@ -76,8 +77,12 @@ export default function Profile() {
         return;
       }
 
-      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData });
-      sessionStorage.setItem('user', JSON.stringify(resData));
+      if (resData.newToken) {
+        sessionStorage.setItem('access_token', JSON.stringify(resData.newToken));
+      }
+
+      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData.restUserInfo });
+      sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
 
       setUpdateSuccess(true);
     } catch (error) {
@@ -92,7 +97,7 @@ export default function Profile() {
       const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${access_token}&${refresh_token}`
         }
       });
 
@@ -105,6 +110,8 @@ export default function Profile() {
 
       dispatch({ type: 'DELETE_USER_SUCCESS' });
       sessionStorage.removeItem('user');
+      sessionStorage.removeItem('access_token');
+      sessionStorage.removeItem('refresh_token');
 
     } catch (error) {
       dispatch({ type: 'DELETE_USER_FAILURE', payload: error.message });
@@ -115,7 +122,17 @@ export default function Profile() {
     try {
       dispatch({ type: 'SIGN_OUT_START' });
 
-      const response = await fetch('https://backend-flap.esainnovation.com/api/auth/signout');
+      const signOutData = {
+        _id: user._id
+      };
+
+      const response = await fetch('https://backend-flap.esainnovation.com/api/auth/signout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(signOutData)
+      });
 
       const resData = await response.json();
 
@@ -127,6 +144,7 @@ export default function Profile() {
       dispatch({ type: 'SIGN_OUT_SUCCESS' });
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('access_token');
+      sessionStorage.removeItem('refresh_token');
 
     } catch (error) {
       dispatch({ type: 'SIGN_OUT_FAILURE', payload: error.message });

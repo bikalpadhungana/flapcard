@@ -4,9 +4,15 @@ const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 
 const createToken = (_id) => {
-    const token = jwt.sign({ _id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ _id }, process.env.JWT_SECRET_KEY, { expiresIn: '15m' });
 
     return token;
+}
+
+const createRefreshToken = (_id) => {
+    const refreshToken = jwt.sign({ _id }, process.env.REFRESH_SECRET_KEY);
+    
+    return refreshToken;
 }
 
 const signup = async (req, res, next) => {
@@ -71,9 +77,18 @@ const signin = async (req, res, next) => {
         }
 
         const token = createToken(user[0]._id);
-        const { password: userPass, ...restUserInfo } = user[0];
+        const refreshToken = createRefreshToken(user[0]._id);
+        await pool.query(`
+        INSERT
+        INTO
+        user_token_list
+        (_id, refresh_token)
+        VALUES
+        (?, ?)`, [user[0]._id, refreshToken]);
 
-        res.status(200).json({ restUserInfo, token });
+        const { password: userPass, userInfoUrl, ...restUserInfo } = user[0];
+
+        res.status(200).json({ restUserInfo, token, refreshToken });
             
     } catch (error) {
         next(error);
@@ -89,9 +104,18 @@ const google = async (req, res, next) => {
 
         if (user.length !== 0) {
             const token = createToken(user[0]._id);
+            const refreshToken = createRefreshToken(user[0]._id);
+            await pool.query(`
+            INSERT
+            INTO
+            user_token_list
+            (_id, token)
+            VALUES
+            (?, ?)`, [user[0]._id, refreshToken]);
+
             const { password, userInfoUrl, ...restUserInfo } = user[0];
 
-            res.status(200).json({ restUserInfo, token });
+            res.status(200).json({ restUserInfo, token, refreshToken });
         } else {
             const userGeneratePassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const salt = await bcrypt.genSalt(10);
@@ -117,17 +141,36 @@ const google = async (req, res, next) => {
             _id=?`, [userInfoUrl, user[0]._id]);
 
             const token = createToken(user[0]._id);
+            const refreshToken = createRefreshToken(user[0]._id);
+            await pool.query(`
+            INSERT
+            INTO
+            user_token_list
+            (_id, token)
+            VALUES
+            (?, ?)`, [user[0]._id, refreshToken]);
+
             const { password, userInfoUrl: infoUrl, ...restUserInfo } = user[0];
             
-            res.status(200).json({ restUserInfo, token });
+            res.status(200).json({ restUserInfo, token, refreshToken });
         }
     } catch (error) {
         next(error);
     }
 }
 
-const signout = (req, res, next) => {
+const signout = async (req, res, next) => {
+
+    const { _id } = req.body;
+
     try {
+        await pool.query(`
+        DELETE
+        FROM
+        user_token_list
+        WHERE
+        _id=?`, [_id]);
+
         res.status(200).json({ message: "User signed out" });
     } catch (error) {
         next(error);
