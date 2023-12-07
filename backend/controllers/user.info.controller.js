@@ -2,6 +2,7 @@ const pool = require('../utilities/database.connection');
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 const vCardsJS = require('vcards-js');
+const fs = require('fs');
 
 const getUserInfo = async (req, res, next) => {
     let { id } = req.params;
@@ -52,10 +53,12 @@ const getUserVCard = async (req, res, next) => {
     
         vCard.photo.embedFromString(imageBase64, 'image/jpeg');
     
-        vCard.saveToFile('test.vcf');
-        console.log(vCard);
+        // read the vcf card format details and send to client
+        vCard.saveToFile('./test.txt');
+        const vCardReadContent = fs.readFileSync("./test.txt", "utf-8");
+        console.log(vCardReadContent);
 
-        res.status(200).json({ message: "Successful" });
+        res.status(200).json(vCardReadContent);
     } catch (error) {
         next(error);
     }

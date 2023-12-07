@@ -20,9 +20,18 @@ export default function UserInfo() {
         
     }, [id]);
   
+  const downloadVCard = (data) => {
+    const element = document.createElement('a');
+    const file = new Blob([data], { type: 'text/plain; charset=utf-8' });
+    element.href = URL.createObjectURL(file);
+    element.download = `${userInfo.username}.vcf`;
+    document.body.appendChild(element);
+    element.click();
+  }
+  
   const handleCreateVCard = async () => {
     
-    const response = await fetch(`http://localhost:3000/api/user-info/vcard/${id}`, {
+    const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/vcard/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,9 +41,9 @@ export default function UserInfo() {
 
     const resData = await response.json();
 
+    downloadVCard(resData);
     console.log(resData);
   }
-
 
   return (
       <div className="p-8 max-w-lg mx-auto border-2 border-navbar my-5 rounded-lg">
@@ -49,7 +58,7 @@ export default function UserInfo() {
              <label className="text-sm px-2">Organization</label> 
             <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
             
-            <button onClick={handleCreateVCard}>Create VCard</button>
+            <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
         </div>
     </div>
   )
