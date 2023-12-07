@@ -61,30 +61,37 @@ export default function Profile() {
         return dispatch({ type: 'UPDATE_USER_FAILURE', payload: 'Phone number must be 10 digits' });
       }
 
-      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${access_token}&${refresh_token}`
-        },
-        body: JSON.stringify(formData)
-      });
+      if (access_token && refresh_token) {
 
-      const resData = await response.json();
+        const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}&${refresh_token}`
+          },
+          body: JSON.stringify(formData)
+        });
+  
+        const resData = await response.json();
+  
+        if (resData.success === false) {
+          dispatch({ type: 'UPDATE_USER_FAILURE', payload: resData.message });
+          return;
+        }
+  
+        if (resData.newToken) {
+          sessionStorage.setItem('access_token', JSON.stringify(resData.newToken));
+        }
+  
+        dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData.restUserInfo });
+        sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
+  
+        setUpdateSuccess(true);
 
-      if (resData.success === false) {
-        dispatch({ type: 'UPDATE_USER_FAILURE', payload: resData.message });
-        return;
+      } else {
+        dispatch({ type: 'UPDATE_USER_FAILURE', payload: 'Forbidden' });
       }
 
-      if (resData.newToken) {
-        sessionStorage.setItem('access_token', JSON.stringify(resData.newToken));
-      }
-
-      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData.restUserInfo });
-      sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
-
-      setUpdateSuccess(true);
     } catch (error) {
       dispatch({ type: 'UPDATE_USER_FAILURE', payload: error.message });
     }
@@ -94,24 +101,30 @@ export default function Profile() {
     try {
       dispatch({ type: 'DELETE_USER_START' });
 
-      const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${access_token}&${refresh_token}`
+      if (access_token && refresh_token) {
+
+        const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${access_token}&${refresh_token}`
+          }
+        });
+  
+        const resData = await response.json();
+  
+        if (resData.success === false) {
+          dispatch({ type: 'DELETE_USER_FAILURE', payload: resData.message });
+          return;
         }
-      });
+  
+        dispatch({ type: 'DELETE_USER_SUCCESS' });
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('refresh_token');
 
-      const resData = await response.json();
-
-      if (resData.success === false) {
-        dispatch({ type: 'DELETE_USER_FAILURE', payload: resData.message });
-        return;
+      } else {
+        dispatch({ type: 'DELETE_USER_FAILURE', payload: 'Forbidden' });
       }
-
-      dispatch({ type: 'DELETE_USER_SUCCESS' });
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('access_token');
-      sessionStorage.removeItem('refresh_token');
 
     } catch (error) {
       dispatch({ type: 'DELETE_USER_FAILURE', payload: error.message });

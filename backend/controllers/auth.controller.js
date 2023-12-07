@@ -109,7 +109,7 @@ const google = async (req, res, next) => {
             INSERT
             INTO
             user_token_list
-            (_id, token)
+            (_id, refresh_token)
             VALUES
             (?, ?)`, [user[0]._id, refreshToken]);
 
@@ -146,7 +146,7 @@ const google = async (req, res, next) => {
             INSERT
             INTO
             user_token_list
-            (_id, token)
+            (_id, refresh_token)
             VALUES
             (?, ?)`, [user[0]._id, refreshToken]);
 
