@@ -1,6 +1,7 @@
 const pool = require('../utilities/database.connection');
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
+const vCardsJS = require('vcards-js');
 
 const getUserInfo = async (req, res, next) => {
     let { id } = req.params;
@@ -34,6 +35,34 @@ const getUserInfo = async (req, res, next) => {
     }
 };
 
+const getUserVCard = async (req, res, next) => {
+
+    const { username, email, phone_number, organization, user_photo } = req.body;
+
+    try {
+        let vCard = vCardsJS();
+    
+        vCard.firstName = username.split(" ")[0];
+        vCard.lastName = username.split(" ")[1];
+        vCard.email = email;
+        vCard.phone_number = phone_number;
+        vCard.organization = organization;
+        
+        const imageBase64 = Buffer.from(user_photo).toString('base64');
+    
+        vCard.photo.embedFromString(imageBase64, 'image/jpeg');
+    
+        vCard.saveToFile('test.vcf');
+        console.log(vCard);
+
+        res.status(200).json({ message: "Successful" });
+    } catch (error) {
+        next(error);
+    }
+    
+}
+
 module.exports = {
-    getUserInfo
+    getUserInfo,
+    getUserVCard
 }

@@ -19,6 +19,21 @@ export default function UserInfo() {
         fetchData();
         
     }, [id]);
+  
+  const handleCreateVCard = async () => {
+    
+    const response = await fetch(`http://localhost:3000/api/user-info/vcard/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userInfo)
+    });
+
+    const resData = await response.json();
+
+    console.log(resData);
+  }
 
 
   return (
@@ -33,6 +48,8 @@ export default function UserInfo() {
               <input type="number" defaultValue={userInfo.phone_number} className="border p-3 rounded-lg border-slate-300" readOnly />
              <label className="text-sm px-2">Organization</label> 
             <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
+            
+            <button onClick={handleCreateVCard}>Create VCard</button>
         </div>
     </div>
   )

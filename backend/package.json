@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
     "mysql2": "^3.6.5",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "vcards-js": "^2.10.0"
   }
 }
