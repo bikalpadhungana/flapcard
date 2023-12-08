@@ -22,11 +22,13 @@ export default function UserInfo() {
   
   const downloadVCard = (data) => {
     const element = document.createElement('a');
-    const file = new Blob([data], { type: 'text/plain; charset=utf-8' });
+    const file = new Blob([data], { type: 'text/vcard; charset=utf-8' });
     element.href = URL.createObjectURL(file);
     element.download = `${userInfo.username}.vcf`;
+    element.style.display = "none";
     document.body.appendChild(element);
     element.click();
+    document.body.removeChild(element);
   }
   
   const handleCreateVCard = async () => {
