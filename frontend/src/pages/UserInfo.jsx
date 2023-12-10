@@ -4,16 +4,22 @@ import { useEffect, useState } from "react";
 export default function UserInfo() {
     const { id } = useParams();
 
-    const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const [userPresent, setUserPresent] = useState(true);
 
     useEffect(() => {
 
         const fetchData = async () => {
-            const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
+          const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
 
-            const resData = await response.json();
+          const resData = await response.json();
+          console.log(resData);
 
-            setUserInfo(resData);
+          if (resData.success === false) {
+            setUserPresent(false);
+          }
+
+          setUserInfo(resData);
         };
 
         fetchData();
@@ -48,7 +54,13 @@ export default function UserInfo() {
   }
 
   return (
-      <div className="p-8 max-w-lg mx-auto border-2 border-navbar my-5 rounded-lg">
+    <div>
+      
+      {!userPresent ? (
+        <div>
+          User not found
+        </div>
+      ) : (<div className="p-8 max-w-lg mx-auto border-2 border-navbar my-5 rounded-lg">
           <div className="flex flex-col gap-4">
             <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
             <label className="text-sm px-2">Username</label>
@@ -62,6 +74,8 @@ export default function UserInfo() {
             
             <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
         </div>
-    </div>
+    </div>)}
+      
+  </div>
   )
 }
