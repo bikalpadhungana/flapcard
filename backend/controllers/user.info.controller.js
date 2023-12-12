@@ -1,18 +1,9 @@
 const pool = require('../utilities/database.connection');
-const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 const vCardsJS = require('vcards-js');
 
 const getUserInfo = async (req, res, next) => {
-    let { id } = req.params;
-    
-    jwt.verify(id, process.env.JWT_SECRET_KEY, (err, userId) => {
-        if (err) {
-            return next(errorHandler(400, "Id is not valid"));
-        }
-
-        id = userId._id;
-    })
+    let { id: urlUsername } = req.params;
     
     try {
         const [user] = await pool.query(`
@@ -21,13 +12,13 @@ const getUserInfo = async (req, res, next) => {
         FROM
         user
         WHERE
-        _id=?`, [id]);
+        urlUsername=?`, [urlUsername]);
 
         if (user.length === 0) {
-            return next(errorHandler(404, 'User not found'));
+            return next(errorHandler(404, "User Not Found"));
         }
 
-        const { password, userInfoUrl, ...restUserInfo } = user[0];
+        const { password, userInfoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
         res.status(200).json(restUserInfo);
     } catch (error) {

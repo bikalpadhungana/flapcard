@@ -8,9 +8,6 @@ import Signup from "./pages/Signup";
 import { Navigate } from "react-router-dom";
 import UserInfo from "./pages/UserInfo";
 
-// components
-import Navbar from "./components/Navbar";
-
 import { useAuthContext } from "./hooks/use.auth.context";
 
 export default function App() {
@@ -19,7 +16,6 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
         <Route path="/" element={!user ? <Navigate to="/sign-in" /> : <Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />

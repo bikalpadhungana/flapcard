@@ -24,7 +24,7 @@ export default function Navbar() {
           
         {user &&
           <ul>
-            <Link to="profile">
+            <Link to="/profile">
               <li className="text-black bg-navbar hover:opacity-75 transition-all duration-500 cursor-pointer border-4 rounded-full border-navbar p-2 w-24 text-center">Profile</li>
             </Link>
           </ul>  

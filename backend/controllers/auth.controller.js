@@ -34,11 +34,26 @@ const signup = async (req, res, next) => {
         user(username, email, password)
         VALUES(?, ?, ?)`, [username, email, hashedPass]);
 
+        const usernameSplit = username.split(" ");
+        let urlUsername = "";
+        if (usernameSplit.length > 1) {
+            urlUsername = usernameSplit.join("");
+        } else {
+            urlUsername = username;
+        }
+
         const resultId = result.insertId;
         const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
+        
+        await pool.query(`
+        UPDATE
+        user
+        SET
+        urlUsername=?
+        WHERE
+        _id=?`, [urlUsername, user[0]._id]);
 
-        const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
-        const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
+        const userInfoUrl = `https://flap.esainnovation.com/user-info/${urlUsername}`;
 
         await pool.query(`
         UPDATE
@@ -48,11 +63,9 @@ const signup = async (req, res, next) => {
         WHERE
         _id=?`, [userInfoUrl, user[0]._id]);
 
-        const { password: userPass, userInfoUrl: infoUrl, ...restUserInfo } = user[0];
+        const { password: userPass, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
-        if (user[0]) {
-            res.status(200).json(restUserInfo);
-        }
+        res.status(200).json(restUserInfo);
     } catch (error) {
         next(error);
     }
@@ -93,7 +106,7 @@ const signin = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 const google = async (req, res, next) => {
 
@@ -126,11 +139,26 @@ const google = async (req, res, next) => {
             user(username, email, password, user_photo)
             VALUES(?, ?, ?, ?)`, [username, email, hashedPass, userPhoto]);
 
+            const usernameSplit = username.split(" ");
+            let urlUsername = "";
+            if (usernameSplit.length > 1) {
+                urlUsername = usernameSplit.join("");
+            } else {
+                urlUsername = username;
+            }
+
             const resultId = result.insertId;
             const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
 
-            const tokenId = jwt.sign({ _id: user[0]._id }, process.env.JWT_SECRET_KEY);
-            const userInfoUrl = `https://flap.esainnovation.com/user-info/${tokenId}`;
+            await pool.query(`
+            UPDATE
+            user
+            SET
+            urlUsername=?
+            WHERE
+            _id=?`, [urlUsername, user[0]._id]);
+
+            const userInfoUrl = `https://flap.esainnovation.com/user-info/${urlUsername}`;
 
             await pool.query(`
             UPDATE
@@ -150,14 +178,14 @@ const google = async (req, res, next) => {
             VALUES
             (?, ?)`, [user[0]._id, refreshToken]);
 
-            const { password, userInfoUrl: infoUrl, ...restUserInfo } = user[0];
+            const { password, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
             
             res.status(200).json({ restUserInfo, token, refreshToken });
         }
     } catch (error) {
         next(error);
     }
-}
+};
 
 const signout = async (req, res, next) => {
 
@@ -175,11 +203,11 @@ const signout = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 module.exports = {
     signup,
     signin,
     google,
     signout
-}
+};
