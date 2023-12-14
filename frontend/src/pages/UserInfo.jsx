@@ -60,7 +60,7 @@ export default function UserInfo() {
         <div>
           User not found
         </div>
-      ) : (<div className="max-w-xs sm:max-w-xs p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
+      ) : (<div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
           <div className="flex flex-col gap-4">
             <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
             <label className="text-sm px-2">Username</label>
