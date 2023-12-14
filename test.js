@@ -8,4 +8,4 @@ console.log(joinStr);
 // console.log(test.length);
 
 //i changed a little bit
-console.log("gg");
+console.log("test");
