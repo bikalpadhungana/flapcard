@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import validator from "validator";
 import OAuth from "../components/google.auth";
 
 // user hooks
 import { useAuthContext } from "../hooks/use.auth.context";
+import useUserCardContext from "../hooks/use.user.card.context";
 
 // components 
 import Navbar from "../components/Navbar";
@@ -16,8 +17,16 @@ export default function Signup() {
   const [password, setPassword] = useState("");
 
   const { loading, error, dispatch } = useAuthContext();
+  const { data } = useUserCardContext();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) {
+      setUsername(data.username);
+      setEmail(data.email);
+    }
+  }, [data]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +49,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await fetch('https://backend-flap.esainnovation.com/api/auth/signup', {
+      const res = await fetch('http://localhost:3000/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -55,8 +64,12 @@ export default function Signup() {
         return;
       }
 
-      dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData });
-      navigate('/sign-in');
+      dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData.restUserInfo });
+      sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
+      sessionStorage.setItem('access_token', JSON.stringify(resData.token));
+      sessionStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
+      
+      navigate('/home');
 
     } catch (error) {
       dispatch({ type: 'SIGN_IN_FAILURE', payload: error });
@@ -69,8 +82,8 @@ export default function Signup() {
       <div className='p-3 max-w-lg mx-auto'>
         <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-          <input type='text' placeholder='Username' className='border p-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
-          <input type='text' placeholder='Email' className='border p-3 rounded-lg' id='email' onChange={(e) => {setEmail(e.target.value)}} />
+          <input type='text' placeholder='Username' defaultValue={username} className='border p-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
+          <input type='text' placeholder='Email' defaultValue={email} className='border p-3 rounded-lg' id='email' onChange={(e) => {setEmail(e.target.value)}} />
           <input type='password' placeholder='Password' className='border p-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
           <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign Up'}</button>
           <OAuth></OAuth>

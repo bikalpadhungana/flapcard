@@ -34,10 +34,12 @@ const port = process.env.PORT;
 const authRoute = require('./routes/auth.route');
 const userRoute = require('./routes/user.route');
 const userInfoRoute = require('./routes/user.info.route');
+const cardOrderRoute = require('./routes/card.order.route');
 
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
 app.use('/api/user-info', userInfoRoute);
+app.use('/api/order', cardOrderRoute);
 
 // error handling middleware
 app.use((error, req, res, next) => {

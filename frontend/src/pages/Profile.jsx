@@ -66,7 +66,7 @@ export default function Profile() {
 
       if (access_token && refresh_token) {
 
-        const response = await fetch(`https://backend-flap.esainnovation.com/api/user/update/${user._id}`, {
+        const response = await fetch(`http://localhost:3000/api/user/update/${user._id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export default function Profile() {
         _id: user._id
       };
 
-      const response = await fetch('https://backend-flap.esainnovation.com/api/auth/signout', {
+      const response = await fetch('http://localhost:3000/api/auth/signout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

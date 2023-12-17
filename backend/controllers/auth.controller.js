@@ -63,9 +63,19 @@ const signup = async (req, res, next) => {
         WHERE
         _id=?`, [userInfoUrl, user[0]._id]);
 
+        const token = createToken(user[0]._id);
+        const refreshToken = createRefreshToken(user[0]._id);
+        await pool.query(`
+        INSERT
+        INTO
+        user_token_list
+        (_id, refresh_token)
+        VALUES
+        (?, ?)`, [user[0]._id, refreshToken]);
+
         const { password: userPass, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
-        res.status(200).json(restUserInfo);
+        res.status(200).json({ restUserInfo, token, refreshToken });
     } catch (error) {
         next(error);
     }
