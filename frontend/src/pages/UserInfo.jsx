@@ -2,29 +2,31 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function UserInfo() {
-    const { id } = useParams();
-
+  const { id } = useParams();
+  
   const [userInfo, setUserInfo] = useState({});
   const [userPresent, setUserPresent] = useState(true);
 
-    useEffect(() => {
+  useEffect(() => {
 
-        const fetchData = async () => {
-          const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
-
-          const resData = await response.json();
-          console.log(resData);
-
-          if (resData.success === false) {
-            setUserPresent(false);
-          }
-
-          setUserInfo(resData);
-        };
-
-        fetchData();
+    if (id !== "example") {
+      const fetchData = async () => {
+        const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
+  
+        const resData = await response.json();
+        console.log(resData);
+  
+        if (resData.success === false) {
+          setUserPresent(false);
+        }
+  
+        setUserInfo(resData);
+      };
+  
+      fetchData();
+    }
         
-    }, [id]);
+  }, [id]);
   
   const downloadVCard = (data) => {
     const element = document.createElement('a');
@@ -53,29 +55,53 @@ export default function UserInfo() {
     console.log(resData);
   }
 
-  return (
-    <div>
-      
-      {!userPresent ? (
-        <div>
-          User not found
-        </div>
-      ) : (<div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
+  if (id === "example") {
+    return (
+      <div>
+        <p className="text-red-600 mt-4 ml-96 max-w-2xl">This is only a representative page. When you create your account, your information will be displayed.</p>
+        <div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
           <div className="flex flex-col gap-4">
-            <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
-            <label className="text-sm px-2">Username</label>
-              <input type="text" id="username" defaultValue={userInfo.username} className="border p-3 rounded-lg border-slate-300" readOnly />
-            <label className="text-sm px-2">Email</label>
-              <input type="text" defaultValue={userInfo.email} className="border p-3 rounded-lg border-slate-300" readOnly />
-            <label className="text-sm px-2">Phone Number</label>
-              <input type="number" defaultValue={userInfo.phone_number} className="border p-3 rounded-lg border-slate-300" readOnly />
-             <label className="text-sm px-2">Organization</label> 
-            <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
-            
-            <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
+              <label className="text-sm px-2">Username</label>
+                <input type="text" id="username" defaultValue="Example" className="border p-3 rounded-lg border-slate-300 text-black/50" readOnly />
+              <label className="text-sm px-2">Email</label>
+                <input type="text" defaultValue="example@gmail.com" className="border p-3 rounded-lg border-slate-300 text-black/50" readOnly />
+              <label className="text-sm px-2">Phone Number</label>
+                <input type="number" className="border p-3 rounded-lg border-slate-300" readOnly />
+              <label className="text-sm px-2">Organization</label> 
+                <input type="text" className="border p-3 rounded-lg border-slate-300" readOnly />
+                
+              <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+          </div>
         </div>
-    </div>)}
-      
-  </div>
-  )
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        
+        {!userPresent ? (
+          <div>
+            User not found
+          </div>
+        ) : (<div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
+            <div className="flex flex-col gap-4">
+              <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
+              <label className="text-sm px-2">Username</label>
+                <input type="text" id="username" defaultValue={userInfo.username} className="border p-3 rounded-lg border-slate-300" readOnly />
+              <label className="text-sm px-2">Email</label>
+                <input type="text" defaultValue={userInfo.email} className="border p-3 rounded-lg border-slate-300" readOnly />
+              <label className="text-sm px-2">Phone Number</label>
+                <input type="number" defaultValue={userInfo.phone_number} className="border p-3 rounded-lg border-slate-300" readOnly />
+               <label className="text-sm px-2">Organization</label> 
+              <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
+              
+              <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+          </div>
+      </div>)}
+        
+    </div>
+    )
+  }
+
 }

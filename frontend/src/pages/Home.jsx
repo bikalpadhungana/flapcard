@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 // components
 import Navbar from "../components/Navbar";
 import flapCard from "../../images/flap-card.png";
+import exampleQr from "../../images/example-flap-user.svg";
 
 // user hooks
 import useUserCardContext from "../hooks/use.user.card.context";
@@ -18,6 +19,7 @@ export default function Home() {
   const [username, setUsername] = useState("Name");
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
+  const [cardView, setCardView] = useState("front");
   const sendData = useRef({});
 
   const cardBackDiv = useRef(null);
@@ -121,20 +123,46 @@ export default function Home() {
     })
   }
 
+  const handleCardViewChange = (e) => {
+    switch (e.target.id) {
+      case 'front':
+        setCardView("front");
+        console.log("front");
+        break;
+      case 'back':
+        setCardView("back");
+        console.log("back");
+        break;
+    }
+  }
+
   if (!user) {
     return (
       <div>
           <Navbar />
           <div className="flex flex-col md:flex-row gap-8 md:gap-20 max-w-full mx-auto md:ml-24 md:mt-8">
               <div className="flex flex-col">  
-                <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
-                  <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
-                    <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">{ username }</p>
-                  </div>
-                  <div ref={cardBackDiv} className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8">
-                    <p className="text-white text-xs md:text-sm text-center">Back</p>
-                  </div>
-                </div>
+                  {cardView === "front" ? 
+                    (<div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
+                      <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
+                        <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">{username}</p>
+                      </div>
+                      <button onClick={handleCardViewChange} ref={cardBackDiv} id="back" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
+                        Back
+                      </button>
+                    </div>) :
+                    (
+                      <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
+                        <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
+                          <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">Back</p>
+                          <img src={exampleQr} className="w-24 -mt-44 ml-60"></img>
+                        </div>
+                        <button onClick={handleCardViewChange} ref={cardFrontDiv} id="front" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
+                          Front
+                        </button>
+                      </div>
+                    )
+                  }
                 <div className="flex max-w-xs md:max-w-3xl mx-auto md:ml-5">
                     <button onClick={handleColorChange} id="black" className="w-10 md:w-20 h-10 md:ml-0 bg-card-color-1 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
                     <button onClick={handleColorChange} id="cyan" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-2 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
