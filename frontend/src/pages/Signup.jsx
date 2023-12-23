@@ -14,6 +14,7 @@ export default function Signup() {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState(null);
   const [password, setPassword] = useState("");
 
   const { loading, error, dispatch } = useAuthContext();
@@ -49,7 +50,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/signup', {
+      const res = await fetch('https://backend-flap.esainnovation.com/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
