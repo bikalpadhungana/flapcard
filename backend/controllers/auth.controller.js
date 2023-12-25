@@ -2,6 +2,7 @@ const pool = require('../utilities/database.connection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
+const createUserQr = require('../utilities/create.user.qr');
 
 const createToken = (_id) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET_KEY, { expiresIn: '15m' });
@@ -42,8 +43,16 @@ const signup = async (req, res, next) => {
             urlUsername = username;
         }
 
+        const userQrSvg = await createUserQr(urlUsername);
+
         const resultId = result.insertId;
         const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
+
+        await pool.query(`
+        INSERT
+        INTO
+        user_qr_code
+        VALUES(?, ?)`, [user[0]._id, userQrSvg]);
         
         await pool.query(`
         UPDATE

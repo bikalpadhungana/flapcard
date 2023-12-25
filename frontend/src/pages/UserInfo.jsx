@@ -52,13 +52,12 @@ export default function UserInfo() {
     const resData = await response.json();
 
     downloadVCard(resData);
-    console.log(resData);
   }
 
   if (id === "example") {
     return (
       <div>
-        <p className="text-red-600 mt-4 ml-96 max-w-2xl">This is only a representative page. When you create your account, your information will be displayed.</p>
+        <p className="text-red-600 mt-4 ml-4 md:ml-96 max-w-2xl">This is only a representative page. When you create your account, your information will be displayed.</p>
         <div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
           <div className="flex flex-col gap-4">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
@@ -71,7 +70,7 @@ export default function UserInfo() {
               <label className="text-sm px-2">Organization</label> 
                 <input type="text" className="border p-3 rounded-lg border-slate-300" readOnly />
                 
-              <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+              <button className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
           </div>
         </div>
       </div>

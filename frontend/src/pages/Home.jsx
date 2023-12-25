@@ -154,8 +154,8 @@ export default function Home() {
                     (
                       <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
                         <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
-                          <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">Back</p>
-                          <img src={exampleQr} className="w-24 -mt-44 ml-60"></img>
+
+                          <img src={exampleQr} className="w-16 md:w-24 mt-14 md:mt-24 ml-32 md:ml-60"></img>
                         </div>
                         <button onClick={handleCardViewChange} ref={cardFrontDiv} id="front" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
                           Front
