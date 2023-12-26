@@ -1,3 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.main{
+    background-color: rgba(127, 255, 212, 0.475);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    min-height: 100vh;
+    background-color: white;
+    max-width: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+    min-width: 320px;
+}
+
+.upper-container{
+    width: 100%;
+    height: 230px;
+    background: url('/images/flap_1.png');
+    background-size: cover;
+    background-position: center center;
+}
+
+/* standard size 153px */
+
+
+.img-sec{
+    width: 100px;
+    /* small screen size img */
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: -50px auto auto 35px;
+    border:  5px solid rgba(255, 255, 255, 0.589);
+}
+
+.img-sec img{
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.lower-container{
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 10px;
+}
+
+hr{
+    border: 1px solid rgba(117, 186, 149, 0.505);
+}
+
+.card-body h2{
+    font-size: 31px;
+    font-weight: 700;
+}
+
+.card-info{
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.user-desc{
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.card-body, .card-info, .user-desc, .card-link, .download{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.card-info > div{
+    margin-bottom: 10px;
+}
+
+.card-link{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:28px;
+    margin-left: -2px;
+}
+
+.item{
+    padding-left: 10px;
+}
+
+.item img{
+    height: 30px;
+    width: 30px;
+}
+
+footer{
+    color: white;
+    background-color: rgb(15, 14, 14);
+}
+
+.footer-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.footer-container h5{
+    font-weight: 400;
+    color: rgb(192, 187, 187);
+}
+
+a{
+    text-decoration: none;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.info img{
+    height: 26px;
+}
+
+.info span{
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.download{
+    
+    background-color: #36C1A8;
+    height: 36px;
+    width: 180px;
+    border-radius: 10px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+   cursor: pointer;
+}
+
+.download img{
+    height: 20px;
+}

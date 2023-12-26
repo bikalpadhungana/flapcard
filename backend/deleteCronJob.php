@@ -10,7 +10,7 @@
         die ("Connection could not be established " . mysqli_connect_error());
     }
     
-    $delete = "DELETE FROM user_token_list WHERE createdAt < (CURRENT_TIMESTAMP() - INTERVAL 12 HOUR);";
+    $delete = "DELETE FROM user_token_list WHERE createdAt < (CURRENT_TIMESTAMP() - INTERVAL 1 HOUR);";
     
     if (mysqli_query($conn, $delete)) {
         echo "Successful";

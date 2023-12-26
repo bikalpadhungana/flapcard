@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import flapCard from "../../images/flap-card.png";
+// import flapCard from "../../images/flap-card.png";
 
 export default function CreateCard() {
   return (
@@ -8,7 +8,7 @@ export default function CreateCard() {
           <div className="flex flex-col md:flex-row gap-8 md:gap-20 max-w-full mx-auto">
               <div className="flex flex-col">  
                 <div className="max-w-3xl my-8 mx-5 border-2 border-navbar rounded-xl">
-                    <img src={flapCard}></img>
+                    {/* <img src={flapCard}></img> */}
                 </div>
                 <div className="flex max-w-xs md:max-w-3xl mx-auto">
                     <div className="w-10 md:w-20 h-10 md:ml-10 bg-card-color-1"></div>

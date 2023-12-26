@@ -57,48 +57,116 @@ export default function UserInfo() {
   if (id === "example") {
     return (
       <div>
-        <p className="text-red-600 mt-4 ml-4 md:ml-96 max-w-2xl">This is only a representative page. When you create your account, your information will be displayed.</p>
-        <div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
-          <div className="flex flex-col gap-4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
-              <label className="text-sm px-2">Username</label>
-                <input type="text" id="username" defaultValue="Example" className="border p-3 rounded-lg border-slate-300 text-black/50" readOnly />
-              <label className="text-sm px-2">Email</label>
-                <input type="text" defaultValue="example@gmail.com" className="border p-3 rounded-lg border-slate-300 text-black/50" readOnly />
-              <label className="text-sm px-2">Phone Number</label>
-                <input type="number" className="border p-3 rounded-lg border-slate-300" readOnly />
-              <label className="text-sm px-2">Organization</label> 
-                <input type="text" className="border p-3 rounded-lg border-slate-300" readOnly />
-                
-              <button className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+        <section className="main">
+          <div className="container">
+            <div className="upper-container">
+            </div>
+            <div className="img-sec">
+                <img src="/images/user-data/5bbdfaffaa69f-1e3db851b878b2fbe59639f48c715c53.png" alt="User Profile Picture" />
+            </div>
+            <div className="lower-container">
+              <hr />
+              <div className="card-body">
+                <h2 className="name">John Doe</h2>
+                {/* <p className="caption">Currently Working in <a href="https://flap.esainnovation.com" target="_blank" rel="noreferrer">Flap</a></p> */}
+              </div>
+              <hr />
+              <div className="card-info">
+                <div className="info">
+                  <img src="/images/phone.png" alt="" height="30px" />
+                  <span>+977 9812345678</span>
+                </div>
+                <div className="info">
+                  <img src="/images/mail.png" alt="" height="30px" />
+                  <span>example@gmail.com</span>
+                </div>
+                <div className="info">
+                  <img src="/images/organization-logo.png" alt="" height="30px" />
+                  <span>Flap</span>
+                </div>
+              </div>
+              <hr />
+              <p className="user-desc">User Bio/ Description</p>
+              <hr />
+              <div className="card-link">
+                <a href="#"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/twitter.svg" alt="fb-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/linked-in.png" alt="fb-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/insta.png" alt="fb-logo" /></div></a>
+              </div>
+              <hr />
+            </div>
           </div>
+      </section>
+      <footer>
+        <div className="footer-container">
+          <a href="https://flap.esainnovation.com"><h5>flap.esainnovation.com</h5></a>
+          <h5>+977 9813704229</h5>
         </div>
-      </div>
+      </footer>
+    </div>
     )
   } else {
     return (
       <div>
-        
         {!userPresent ? (
           <div>
             User not found
           </div>
-        ) : (<div className="max-w-xs md:max-w-lg p-8 mx-auto border-2 border-navbar my-5 rounded-lg">
-            <div className="flex flex-col gap-4">
-              <img src={userInfo.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center mt-2" />
-              <label className="text-sm px-2">Username</label>
-                <input type="text" id="username" defaultValue={userInfo.username} className="border p-3 rounded-lg border-slate-300" readOnly />
-              <label className="text-sm px-2">Email</label>
-                <input type="text" defaultValue={userInfo.email} className="border p-3 rounded-lg border-slate-300" readOnly />
-              <label className="text-sm px-2">Phone Number</label>
-                <input type="number" defaultValue={userInfo.phone_number} className="border p-3 rounded-lg border-slate-300" readOnly />
-               <label className="text-sm px-2">Organization</label> 
-              <input type="text" defaultValue={userInfo.organization} className="border p-3 rounded-lg border-slate-300" readOnly />
-              
-              <button onClick={handleCreateVCard} className="mt-8 p-3 border-2 rounded-2xl bg-navbar font-medium text-lg">Save Contact</button>
+        ) : (
+          <div>
+            <section className="main">
+              <div className="container">
+                <div className="upper-container">
+                </div>
+                <div className="img-sec">
+                  <img src={ userInfo.user_photo } alt="User Profile Picture" />
+                </div>
+                <div className="lower-container">
+                  <hr />
+                  <div className="card-body">
+                      <h2 className="name">{ userInfo.username }</h2>
+                    {/* <p className="caption">Currently Working in <a href="https://flap.esainnovation.com" target="_blank" rel="noreferrer">Flap</a></p> */}
+                  </div>
+                  <hr />
+                  <div className="card-info">
+                    <div className="info">
+                      <img src="/images/phone.png" alt="" height="30px" />
+                        <span>+977 { userInfo.phone_number }</span>
+                    </div>
+                    <div className="info">
+                      <img src="/images/mail.png" alt="" height="30px" />
+                        <span>{ userInfo.email }</span>
+                    </div>
+                    <div className="info">
+                      <img src="/images/organization-logo.png" alt="" height="30px" />
+                        <span>{ userInfo.organization }</span>
+                    </div>
+                  </div>
+                  <hr />
+                  <p className="user-desc">User Bio/ Description</p>
+                  <hr />
+                  <div className="card-link">
+                    <a href="#"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>
+                    <a href="#"><div className="item"><img src="/images/twitter.svg" alt="fb-logo" /></div></a>
+                    <a href="#"><div className="item"><img src="/images/linked-in.png" alt="fb-logo" /></div></a>
+                    <a href="#"><div className="item"><img src="/images/insta.png" alt="fb-logo" /></div></a>
+                  </div>
+                  <hr />
+                  <button onClick={handleCreateVCard} className="download">
+                    <h5>Save Contact</h5>
+                    <img src="/images/download-icon.png" alt="" />
+                  </button>
+                </div>
+              </div>
+            </section>
+            <footer>
+              <div className="footer-container">
+                <a target="_blank" rel="noreferrer" href="https://flap.esainnovation.com"><h5>@flap</h5></a>
+              </div>
+            </footer>
           </div>
-      </div>)}
-        
+        )} 
     </div>
     )
   }

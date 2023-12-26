@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/sign-in" element={!user ? <Signin /> : <Navigate to="/home" />} />
         <Route path="/sign-up" element={!user ? <Signup /> : <Navigate to="/home" />} />
         <Route path="/create-card" element={ <CreateCard /> } />
-        <Route path="/user-info/:id" element={ <UserInfo /> } />
+        <Route path="/user-info/:id" element={<UserInfo />} />
       </Routes>
     </BrowserRouter>
   )
