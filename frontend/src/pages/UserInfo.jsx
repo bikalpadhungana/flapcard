@@ -6,21 +6,30 @@ export default function UserInfo() {
   
   const [userInfo, setUserInfo] = useState({});
   const [userPresent, setUserPresent] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
     if (id !== "example") {
       const fetchData = async () => {
-        const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
+        const response = await fetch(`http://localhost:3000/api/user-info/${id}`);
   
         const resData = await response.json();
-        console.log(resData);
   
         if (resData.success === false) {
           setUserPresent(false);
         }
+
+        // check current user url
+        if (resData.selectedUrl === 'default_url') {
+          setUserInfo(resData.user);
+          setLoading(false);
+        } else {
+          if (resData.url) {
+            window.location.replace(resData.url);
+          }
+        }
   
-        setUserInfo(resData);
       };
   
       fetchData();
@@ -113,7 +122,7 @@ export default function UserInfo() {
           <div>
             User not found
           </div>
-        ) : (
+        ) : loading ? (<div>Loading</div>) : (
           <div>
             <section className="main">
               <div className="container">
@@ -144,7 +153,7 @@ export default function UserInfo() {
                     </div>
                   </div>
                   <hr />
-                  <p className="user-desc">User Bio/ Description</p>
+                  <p className="user-desc">Hi, I'am {userInfo.username} </p>
                   <hr />
                   <div className="card-link">
                     <a href="#"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>

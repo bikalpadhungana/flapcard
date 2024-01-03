@@ -4,12 +4,14 @@ const jwt = require('jsonwebtoken');
 const errorHandler = require('../middlewares/error.handler');
 const createUserQr = require('../utilities/create.user.qr');
 
+// create access token
 const createToken = (_id) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET_KEY, { expiresIn: '15m' });
 
     return token;
 }
 
+// create refresh token
 const createRefreshToken = (_id) => {
     const refreshToken = jwt.sign({ _id }, process.env.REFRESH_SECRET_KEY);
     
@@ -20,21 +22,25 @@ const signup = async (req, res, next) => {
 
     const { username, email, password } = req.body;
 
+    // check if email is registered
     const [emailExists] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
     if (emailExists.length !== 0) {
         return next(errorHandler(400, "Email already registered"));
     }
 
+    // hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, salt);
 
     try {
+        // sign up the user
         const [result] = await pool.query(`
         INSERT INTO
         user(username, email, password)
         VALUES(?, ?, ?)`, [username, email, hashedPass]);
 
+        // beautify username for url
         const usernameSplit = username.split(" ");
         let urlUsername = "";
         if (usernameSplit.length > 1) {
@@ -43,6 +49,7 @@ const signup = async (req, res, next) => {
             urlUsername = username;
         }
 
+        // create user qr-code
         const userQrSvg = await createUserQr(urlUsername);
 
         const resultId = result.insertId;
@@ -54,6 +61,7 @@ const signup = async (req, res, next) => {
         user_qr_code
         VALUES(?, ?)`, [user[0]._id, userQrSvg]);
         
+        // set user url.
         await pool.query(`
         UPDATE
         user
@@ -72,6 +80,7 @@ const signup = async (req, res, next) => {
         WHERE
         _id=?`, [userInfoUrl, user[0]._id]);
 
+        // create tokens
         const token = createToken(user[0]._id);
         const refreshToken = createRefreshToken(user[0]._id);
         await pool.query(`
@@ -81,6 +90,15 @@ const signup = async (req, res, next) => {
         (_id, refresh_token)
         VALUES
         (?, ?)`, [user[0]._id, refreshToken]);
+
+        // populate the user url table.
+        await pool.query(`
+        INSERT
+        INTO
+        user_urls
+        (_id, default_url)
+        VALUES
+        (?, ?)`, [user[0]._id, userInfoUrl]);
 
         const { password: userPass, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 

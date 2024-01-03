@@ -177,7 +177,7 @@ export default function Profile() {
           <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*" />
           <img src={formData.user_photo ? formData.user_photo : user.user_photo} onClick={() => { fileRef.current.click() }} alt="Profile" className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2" />
           <p className="text-center text-sm">
-            {fileUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 2MB)</span>) : (filePercentage > 0 && filePercentage < 100) ? (<span className="text-slate-700">{`Uploading ${filePercentage}%`}</span>) : (filePercentage === 100 && !fileUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
+            {fileUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 10MB)</span>) : (filePercentage > 0 && filePercentage < 100) ? (<span className="text-slate-700">{`Uploading ${filePercentage}%`}</span>) : (filePercentage === 100 && !fileUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
           </p>
           <input type="text" defaultValue={user.username} placeholder="username" id="username" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.email} placeholder="email" id="email" className="border p-3 rounded-lg" onChange={handleChange} />

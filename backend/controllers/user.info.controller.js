@@ -18,9 +18,26 @@ const getUserInfo = async (req, res, next) => {
             return next(errorHandler(404, "User Not Found"));
         }
 
+        const userId = user[0]._id;
+
+        const [userUrl] = await pool.query(`
+        SELECT
+        *
+        FROM
+        user_urls
+        WHERE
+        _id=(?)`, [userId]);
+
+        const selectedUrl = userUrl[0].selected_url;
+
+        const loadUrlQuery = `SELECT ${selectedUrl} FROM user_urls WHERE _id=${userId}`;
+
+        const [loadUrl] = await pool.query(loadUrlQuery);
+        const urlToBeLoaded = loadUrl[0][selectedUrl];
+
         const { password, userInfoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
-        res.status(200).json(restUserInfo);
+        res.status(200).json({ user: restUserInfo, url: urlToBeLoaded, selectedUrl });
     } catch (error) {
         next(error);
     }
@@ -38,8 +55,8 @@ const getUserVCard = async (req, res, next) => {
         vCard.email = email;
         vCard.cellPhone = phone_number;
         vCard.organization = organization;
-        vCard.photo.attachFromUrl(user_photo, 'JPEG');
-        
+        vCard.photo.attachFromUrl(user_photo, 'png');
+
         const vCardInfoString = vCard.getFormattedString();
 
         res.status(200).json(vCardInfoString);

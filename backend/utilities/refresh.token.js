@@ -12,8 +12,6 @@ const checkTokenAvailability = async (refreshToken) => {
     WHERE
     refresh_token=?`, [refreshToken]);
 
-    userId = tokenChecked[0]._id;
-
     if (tokenChecked.length === 0) {
         return false;
     }
