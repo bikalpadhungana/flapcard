@@ -136,7 +136,22 @@ const signin = async (req, res, next) => {
         VALUES
         (?, ?)`, [user[0]._id, refreshToken]);
 
+        const [user_urls] = await pool.query(`
+        SELECT *
+        FROM
+        user_urls
+        WHERE
+        _id=?`, [user[0]._id]);
+
         const { password: userPass, userInfoUrl, ...restUserInfo } = user[0];
+
+        const userUrlsArr = Object.entries(user_urls[0]);
+
+        for ([key, value] of userUrlsArr) {
+            if (value !== null) {
+                restUserInfo[key] = value;
+            }
+        }
 
         res.status(200).json({ restUserInfo, token, refreshToken });
             
@@ -163,7 +178,22 @@ const google = async (req, res, next) => {
             VALUES
             (?, ?)`, [user[0]._id, refreshToken]);
 
+            const [user_urls] = await pool.query(`
+            SELECT *
+            FROM
+            user_urls
+            WHERE
+            _id=?`, [user[0]._id]);
+
             const { password, userInfoUrl, ...restUserInfo } = user[0];
+
+            const userUrlsArr = Object.entries(user_urls[0]);
+
+            for ([key, value] of userUrlsArr) {
+                if (value !== null) {
+                    restUserInfo[key] = value;
+                }
+            }
 
             res.status(200).json({ restUserInfo, token, refreshToken });
         } else {
@@ -184,8 +214,17 @@ const google = async (req, res, next) => {
                 urlUsername = username;
             }
 
+            // create user qr-code
+            const userQrSvg = await createUserQr(urlUsername);
+
             const resultId = result.insertId;
             const [user] = await pool.query(`SELECT * FROM user WHERE _id=?`, [resultId]);
+
+            await pool.query(`
+            INSERT
+            INTO
+            user_qr_code
+            VALUES(?, ?)`, [user[0]._id, userQrSvg]);
 
             await pool.query(`
             UPDATE
@@ -215,7 +254,31 @@ const google = async (req, res, next) => {
             VALUES
             (?, ?)`, [user[0]._id, refreshToken]);
 
+            // populate the user url table.
+            await pool.query(`
+            INSERT
+            INTO
+            user_urls
+            (_id, default_url)
+            VALUES
+            (?, ?)`, [user[0]._id, userInfoUrl]);
+
             const { password, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
+
+            const [user_urls] = await pool.query(`
+            SELECT *
+            FROM
+            user_urls
+            WHERE
+            _id=?`, [user[0]._id]);
+
+            const userUrlsArr = Object.entries(user_urls[0]);
+
+            for ([key, value] of userUrlsArr) {
+                if (value !== null) {
+                    restUserInfo[key] = value;
+                }
+            }
             
             res.status(200).json({ restUserInfo, token, refreshToken });
         }

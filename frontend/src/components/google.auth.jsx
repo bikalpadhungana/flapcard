@@ -34,7 +34,7 @@ export default function OAuth() {
         sessionStorage.setItem('access_token', JSON.stringify(resData.token));
         sessionStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
 
-        navigate('/home');
+        navigate('/profile');
     }
 
     return (

@@ -28,16 +28,24 @@ const getUserInfo = async (req, res, next) => {
         WHERE
         _id=(?)`, [userId]);
 
-        const selectedUrl = userUrl[0].selected_url;
+        // const selectedUrl = userUrl[0].selected_url;
 
-        const loadUrlQuery = `SELECT ${selectedUrl} FROM user_urls WHERE _id=${userId}`;
+        // const loadUrlQuery = `SELECT ${selectedUrl} FROM user_urls WHERE _id=${userId}`;
 
-        const [loadUrl] = await pool.query(loadUrlQuery);
-        const urlToBeLoaded = loadUrl[0][selectedUrl];
+        // const [loadUrl] = await pool.query(loadUrlQuery);
+        // const urlToBeLoaded = loadUrl[0][selectedUrl];
 
         const { password, userInfoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
-        res.status(200).json({ user: restUserInfo, url: urlToBeLoaded, selectedUrl });
+        const userUrlsArr = Object.entries(userUrl[0]);
+
+        for ([key, value] of userUrlsArr) {
+            if (value !== null) {
+                restUserInfo[key] = value;
+            }
+        }
+
+        res.status(200).json({ user: restUserInfo });
     } catch (error) {
         next(error);
     }

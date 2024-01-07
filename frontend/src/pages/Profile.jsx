@@ -20,6 +20,8 @@ export default function Profile() {
   const access_token = JSON.parse(sessionStorage.getItem('access_token'));
   const refresh_token = JSON.parse(sessionStorage.getItem('refresh_token'));
 
+  console.log(formData);
+
   useEffect(() => {
     if (file) {
       handleUploadFile(file);
@@ -184,6 +186,11 @@ export default function Profile() {
           <input type="password" placeholder="password" id="password" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="number" defaultValue={user.phone_number} placeholder="phone number" id="phone_number" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.organization} placeholder="organization" id="organization" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.facebook_url} placeholder="facebook" id="facebook_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.instagram_url} placeholder="instagram" id="instagram_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.twitter_url} placeholder="twitter" id="twitter_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.linkedin_url} placeholder="linkedin" id="linkedin_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.youtube_url} placeholder="youtube" id="youtube_url" className="border p-3 rounded-lg" onChange={handleChange} />
           <button disabled={loading} className="bg-navbar text-black rounded-lg uppercase p-3 hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
         </form>
 

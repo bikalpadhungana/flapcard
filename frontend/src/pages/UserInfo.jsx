@@ -12,23 +12,25 @@ export default function UserInfo() {
 
     if (id !== "example") {
       const fetchData = async () => {
-        const response = await fetch(`http://localhost:3000/api/user-info/${id}`);
+        const response = await fetch(`https://backend-flap.esainnovation.com/api/user-info/${id}`);
   
         const resData = await response.json();
-  
+
         if (resData.success === false) {
           setUserPresent(false);
+          return;
         }
 
         // check current user url
-        if (resData.selectedUrl === 'default_url') {
-          setUserInfo(resData.user);
-          setLoading(false);
-        } else {
-          if (resData.url) {
-            window.location.replace(resData.url);
-          }
-        }
+        // if (resData.selectedUrl === 'default_url') {
+        setUserInfo(resData.user);
+        setLoading(false);
+        setUserPresent(true);
+        // } else {
+        //   if (resData.url) {
+        //     window.location.replace(resData.url);
+        //   }
+        // }
   
       };
   
@@ -99,7 +101,7 @@ export default function UserInfo() {
               <hr />
               <div className="card-link">
                 <a href="#"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>
-                <a href="#"><div className="item"><img src="/images/twitter.svg" alt="fb-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/twitter_2.png" alt="fb-logo" /></div></a>
                 <a href="#"><div className="item"><img src="/images/linked-in.png" alt="fb-logo" /></div></a>
                 <a href="#"><div className="item"><img src="/images/insta.png" alt="fb-logo" /></div></a>
               </div>
@@ -109,8 +111,7 @@ export default function UserInfo() {
       </section>
       <footer>
         <div className="footer-container">
-          <a href="https://flap.esainnovation.com"><h5>flap.esainnovation.com</h5></a>
-          <h5>+977 9813704229</h5>
+          <a target="_blank" rel="noreferrer" href="https://flap.esainnovation.com"><h5>@flap</h5></a>
         </div>
       </footer>
     </div>
@@ -155,11 +156,12 @@ export default function UserInfo() {
                   <hr />
                   <p className="user-desc">Hi, I'am {userInfo.username} </p>
                   <hr />
-                  <div className="card-link">
-                    <a href="#"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>
-                    <a href="#"><div className="item"><img src="/images/twitter.svg" alt="fb-logo" /></div></a>
-                    <a href="#"><div className="item"><img src="/images/linked-in.png" alt="fb-logo" /></div></a>
-                    <a href="#"><div className="item"><img src="/images/insta.png" alt="fb-logo" /></div></a>
+                    <div className="card-link">
+                      {userInfo.facebook_url && (<a href={userInfo.facebook_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>)}  
+                      {userInfo.twitter_url && (<a href={userInfo.twitter_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/twitter_2.png" alt="twitter-logo" /></div></a>)}
+                      {userInfo.linkedin_url && (<a href={userInfo.linkedin_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/linked-in.png" alt="linkedin-logo" /></div></a>)}
+                      {userInfo.instagram_url && (<a href={userInfo.instagram_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/insta.png" alt="instagram-logo" /></div></a>)}
+                      {userInfo.youtube_url && (<a href={userInfo.youtube_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/youtube.png" alt="youtube-logo" /></div></a>)}
                   </div>
                   <hr />
                   <button onClick={handleCreateVCard} className="download">

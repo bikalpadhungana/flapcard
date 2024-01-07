@@ -48,7 +48,7 @@ export default function Signin() {
       sessionStorage.setItem('access_token', JSON.stringify(resData.token));
       sessionStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
 
-      navigate('/home');
+      navigate('/profile');
 
     } catch (error) {
       dispatch({ type: 'SIGN_IN_FAILURE', payload: error });
