@@ -6,7 +6,7 @@ import OAuth from "../components/google.auth";
 import { useAuthContext } from "../hooks/use.auth.context";
 
 // components
-import Navbar from "../components/Navbar";
+import Navbar from "../ui/Navbar";
 
 export default function Signin() {
 

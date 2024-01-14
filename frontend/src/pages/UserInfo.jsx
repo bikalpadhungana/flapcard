@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+// yo import is manual change it please!
+import cover_photo from "/images/flap_logo.jpeg";
 
 export default function UserInfo() {
   const { id } = useParams();
@@ -70,7 +72,7 @@ export default function UserInfo() {
       <div>
         <section className="main">
           <div className="container">
-            <div className="upper-container">
+            <div className="upper-container" style={userInfo.user_cover_photo ? {backgroundImage: userInfo.user_cover_photo} : {backgroundImage: cover_photo}}>
             </div>
             <div className="img-sec">
                 <img src="/images/user-data/5bbdfaffaa69f-1e3db851b878b2fbe59639f48c715c53.png" alt="User Profile Picture" />
@@ -128,15 +130,19 @@ export default function UserInfo() {
             <section className="main">
               <div className="container">
                 <div className="upper-container">
+                  <img src={userInfo.user_cover_photo ? userInfo.user_cover_photo : cover_photo} alt="coverphoto" onClick={""}/>
+                 {/* aaile lai manually garya xu */}
                 </div>
                 <div className="img-sec">
                   <img src={ userInfo.user_photo } alt="User Profile Picture" />
+                
+
                 </div>
                 <div className="lower-container">
                   <hr />
                   <div className="card-body">
                       <h2 className="name">{ userInfo.username }</h2>
-                    {/* <p className="caption">Currently Working in <a href="https://flap.esainnovation.com" target="_blank" rel="noreferrer">Flap</a></p> */}
+                    {/* <p className="caption"><span>UI/UX dev</span>, <a href="https://flap.esainnovation.com" target="_blank" rel="noreferrer">Flap</a></p> */}
                   </div>
                   <hr />
                   <div className="card-info">
@@ -154,7 +160,7 @@ export default function UserInfo() {
                     </div>
                   </div>
                   <hr />
-                  <p className="user-desc">Hi, I'am {userInfo.username} </p>
+                  <p className="user-desc">Hi, I'm {userInfo.username} </p>
                   <hr />
                     <div className="card-link">
                       {userInfo.facebook_url && (<a href={userInfo.facebook_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>)}  

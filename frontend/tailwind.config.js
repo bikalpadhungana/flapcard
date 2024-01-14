@@ -17,8 +17,8 @@ export default {
         'card-color-7': '#8bca62'
       },
       backgroundImage: {
-        'world-map': "url('./images/world-map.png')"
-      }
+        'world-map': "url('/images/world-map.png')"
+      },
     },
   },
   plugins: [],

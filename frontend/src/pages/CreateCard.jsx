@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../ui/Navbar";
 // import flapCard from "../../images/flap-card.png";
 
 export default function CreateCard() {

@@ -2,6 +2,7 @@ import { useAuthContext } from "../hooks/use.auth.context";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
+import cover_photo from "/images/flap_logo.jpeg";
 
 // components
 import Navbar from "../components/Navbar";
@@ -9,11 +10,15 @@ import Navbar from "../components/Navbar";
 export default function Profile() {
   
   const { loading, error, dispatch, user } = useAuthContext();
-  const fileRef = useRef(null);
+  const userPhotoRef = useRef(null);
+  const coverPhotoRef = useRef(null);
   
-  const [file, setFile] = useState(undefined);
+  const [profilePicture, setProfilePicture] = useState(undefined);
+  const [coverPhoto, setCoverPhoto] = useState(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
+  const [coverPhotoPercentage, setCoverPhotoPercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
+  const [coverPhotoUploadError, setCoverPhotoUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
@@ -23,12 +28,15 @@ export default function Profile() {
   console.log(formData);
 
   useEffect(() => {
-    if (file) {
-      handleUploadFile(file);
+    if (profilePicture) {
+      handleUploadFile(profilePicture, "profilePicture");
     }
-  }, [file]);
+    if (coverPhoto) {
+      handleUploadFile(coverPhoto, "coverPhoto");
+    }
+  }, [profilePicture, coverPhoto]);
 
-  const handleUploadFile = (file) => {
+  const handleUploadFile = (file, type) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -37,15 +45,27 @@ export default function Profile() {
     uploadTask.on('state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setFilePercentage(Math.round(progress));
+        if (type === "profilePicture") {
+          setFilePercentage(Math.round(progress));
+        } else if (type === "coverPhoto") {
+          setCoverPhotoPercentage(Math.round(progress));
+        }
       },
       (error) => {
-        setFileUploadError(true);
+        if (type === "profilePicture") {
+          setFileUploadError(true);
+        } else if (type === "coverPhoto") {
+          setCoverPhotoUploadError(true);
+        }
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref)
           .then((downloadUrl) => {
-            setFormData({ ...formData, user_photo: downloadUrl });
+            if (type === "profilePicture") {
+              setFormData({ ...formData, user_photo: downloadUrl });
+            } else if (type === "coverPhoto") {
+              setFormData({ ...formData, user_cover_photo: downloadUrl });
+            }
           });
       }
     );
@@ -172,15 +192,26 @@ export default function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="p-3 max-w-lg mx-auto">
-        <h1 className='text-3xl font-semibold text-center mt-2 mb-4'>Profile</h1>
+      <div className="p-3 max-w-lg mx-auto shadow-lg">
+        <h1 className='text-3xl font-semibold text-center mt-2 mb-4'>Edit Profile</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input onChange={(e) => setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*" />
-          <img src={formData.user_photo ? formData.user_photo : user.user_photo} onClick={() => { fileRef.current.click() }} alt="Profile" className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2" />
+          <input onChange={(e) => setCoverPhoto(e.target.files[0])} type="file" ref={coverPhotoRef} hidden accept="image/*"  />
+          <input onChange={(e) => setProfilePicture(e.target.files[0])} type="file" ref={userPhotoRef} hidden accept="image/*" />
+          {/* yesma click garda call function */}
+          <img src={formData.user_cover_photo ? formData.user_cover_photo : (user.user_cover_photo ? user.user_cover_photo : cover_photo)} alt="coverphoto"></img>
+          <span className="Change_cover text-center color text-slate-400 cursor-pointer" onClick={() => { coverPhotoRef.current.click() }}>Change cover photo</span>
+          <p className="text-center text-sm">
+            {coverPhotoUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 10MB)</span>) : (coverPhotoPercentage > 0 && coverPhotoPercentage < 100) ? (<span className="text-slate-700">{`Uploading ${coverPhotoPercentage}%`}</span>) : (coverPhotoPercentage === 100 && !coverPhotoUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
+          </p>
+          <hr />
+          <img src={formData.user_photo ? formData.user_photo : user.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center" />
+          {/* yo click garda same function call as above */}
+          <span className="Change_profile text-center color text-slate-400 cursor-pointer" onClick={() => { userPhotoRef.current.click() } }>Change your Profile picture</span> 
           <p className="text-center text-sm">
             {fileUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 10MB)</span>) : (filePercentage > 0 && filePercentage < 100) ? (<span className="text-slate-700">{`Uploading ${filePercentage}%`}</span>) : (filePercentage === 100 && !fileUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
           </p>
+          <hr />
           <input type="text" defaultValue={user.username} placeholder="username" id="username" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.email} placeholder="email" id="email" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="password" placeholder="password" id="password" className="border p-3 rounded-lg" onChange={handleChange} />

@@ -8,7 +8,7 @@ import { useAuthContext } from "../hooks/use.auth.context";
 import useUserCardContext from "../hooks/use.user.card.context";
 
 // components 
-import Navbar from "../components/Navbar";
+import Navbar from "../ui/Navbar";
 
 export default function Signup() {
 

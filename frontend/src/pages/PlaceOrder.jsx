@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 // components
-import Navbar from "../components/Navbar";
+import Navbar from "../ui/Navbar";
 import exampleQr from "/images/example-flap-user.svg";
 
 // user hooks
 import useUserCardContext from "../hooks/use.user.card.context";
 import { useAuthContext } from "../hooks/use.auth.context";
 
-export default function Home() {
+export default function PlaceOrder() {
 
   const { user } = useAuthContext();
   const { data, dispatch } = useUserCardContext();
@@ -144,7 +144,7 @@ export default function Home() {
                   {cardView === "front" ? 
                     (<div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
                       <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
-                        <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">{username}</p>
+                        <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-7 pt-36 md:pt-60">{username}</p>
                       </div>
                       <button onClick={handleCardViewChange} ref={cardBackDiv} id="back" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
                         Back

@@ -17,7 +17,7 @@
 }
 
 .main{
-    background-color: rgba(127, 255, 212, 0.475);
+    background-color: rgba(11, 40, 30, 0.475);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -28,7 +28,6 @@
     min-height: 100vh;
     background-color: white;
     max-width: 450px;
-    border-radius: 15px;
     overflow: hidden;
     min-width: 320px;
 }
@@ -36,22 +35,30 @@
 .upper-container{
     width: 100%;
     height: 230px;
-    background: url('/images/flap_logo.jpeg');
+    /* background: url('/images/flap_logo.jpeg'); */
     background-size: cover;
     background-position: center center;
+}
+
+.upper-container img{
+    width: 100%;
+    height: 235px;
+    scale:auto;
+    border-image: auto;
 }
 
 /* standard size 153px */
 
 
 .img-sec{
-    width: 100px;
+    filter: drop-shadow(0 0 rgb(81, 75, 75) );
+    width: 110px;
     /* small screen size img */
-    height: 100px;
+    height: 110px;
     border-radius: 50%;
     overflow: hidden;
     margin: -50px auto auto 35px;
-    border:  5px solid rgba(255, 255, 255, 0.589);
+    border:  4px solid rgba(255, 255, 255, 0.589);
 }
 
 .img-sec img{
