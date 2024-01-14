@@ -5,7 +5,7 @@ import { app } from "../firebase";
 import cover_photo from "/images/flap_logo.jpeg";
 
 // components
-import Navbar from "../components/Navbar";
+import Navbar from "../ui/Navbar";
 
 export default function Profile() {
   
@@ -22,8 +22,8 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
-  const access_token = JSON.parse(sessionStorage.getItem('access_token'));
-  const refresh_token = JSON.parse(sessionStorage.getItem('refresh_token'));
+  const access_token = JSON.parse(localStorage.getItem('access_token'));
+  const refresh_token = JSON.parse(localStorage.getItem('refresh_token'));
 
   console.log(formData);
 
@@ -105,11 +105,11 @@ export default function Profile() {
         }
   
         if (resData.newToken) {
-          sessionStorage.setItem('access_token', JSON.stringify(resData.newToken));
+          localStorage.setItem('access_token', JSON.stringify(resData.newToken));
         }
   
         dispatch({ type: 'UPDATE_USER_SUCCESS', payload: resData.restUserInfo });
-        sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
+        localStorage.setItem('user', JSON.stringify(resData.restUserInfo));
   
         setUpdateSuccess(true);
 
@@ -143,9 +143,9 @@ export default function Profile() {
         }
   
         dispatch({ type: 'DELETE_USER_SUCCESS' });
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('access_token');
-        sessionStorage.removeItem('refresh_token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
 
       } else {
         dispatch({ type: 'DELETE_USER_FAILURE', payload: 'Forbidden' });
@@ -180,9 +180,9 @@ export default function Profile() {
       }
 
       dispatch({ type: 'SIGN_OUT_SUCCESS' });
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('access_token');
-      sessionStorage.removeItem('refresh_token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
 
     } catch (error) {
       dispatch({ type: 'SIGN_OUT_FAILURE', payload: error.message });

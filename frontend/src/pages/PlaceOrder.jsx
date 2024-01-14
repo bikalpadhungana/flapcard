@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 // components
 import Navbar from "../ui/Navbar";
+import CheckUserLoggedStatus from "../utilities/CheckUserLoggedStatus";
 import exampleQr from "/images/example-flap-user.svg";
 
 // user hooks
@@ -138,7 +139,8 @@ export default function PlaceOrder() {
   if (!user) {
     return (
       <div>
-          <Navbar />
+        <CheckUserLoggedStatus />
+        <Navbar />
           <div className="flex flex-col md:flex-row gap-8 md:gap-20 max-w-full mx-auto md:ml-24 md:mt-8">
               <div className="flex flex-col">  
                   {cardView === "front" ? 

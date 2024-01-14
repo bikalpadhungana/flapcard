@@ -30,9 +30,9 @@ export default function OAuth() {
         }
 
         dispatch({ type: 'SIGN_IN_SUCCESS', payload: resData.restUserInfo });
-        sessionStorage.setItem('user', JSON.stringify(resData.restUserInfo));
-        sessionStorage.setItem('access_token', JSON.stringify(resData.token));
-        sessionStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
+        localStorage.setItem('user', JSON.stringify(resData.restUserInfo));
+        localStorage.setItem('access_token', JSON.stringify(resData.token));
+        localStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
 
         navigate('/profile');
     }
