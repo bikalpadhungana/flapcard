@@ -9,6 +9,7 @@ import useUserCardContext from "../hooks/use.user.card.context";
 
 // components 
 import Navbar from "../ui/Navbar";
+import Footer from "../ui/Footer";
 
 export default function Signup() {
 
@@ -78,26 +79,29 @@ export default function Signup() {
   }
 
   return (
-    <div>
+    <div className="h-screen flex flex-col justify-between">
       <Navbar />
-      <div className='p-3 max-w-lg mx-auto'>
-        <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-          <input type='text' placeholder='Username' defaultValue={username} className='border p-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
-          <input type='text' placeholder='Email' defaultValue={email} className='border p-3 rounded-lg' id='email' onChange={(e) => {setEmail(e.target.value)}} />
-          <input type='password' placeholder='Password' className='border p-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
-          <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign Up'}</button>
+      <div className='p-3 px-9 max-w-lg mx-auto w-full pt-16'>
+        <h1 className='sm:text-3xl text-2xl text-left font-semibold my-7'>Create a new Account</h1>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4 text-sm sm:text-base'>
+          <input type='text' placeholder='Username' defaultValue={username} className='border border-slate-400 py-2 md:py-3 px-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
+          <input type='text' placeholder='Email' defaultValue={email} className='border border-slate-400 rounded-lg py-2 md:py-3 px-3 ' id='email' onChange={(e) => {setEmail(e.target.value)}} />
+          <input type='password' placeholder='Password' className='border border-slate-400 py-2 md:py-3 px-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
+          <button disabled={loading} className='bg-[#143385] text-white py-2 md:py-3 px-3 rounded-lg hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign up'}</button>
           <OAuth></OAuth>
         </form>
 
         <div className='flex gap-2 mt-5'>
-          <p>Have an accout?</p>
+          <p>Already have an account?</p>
           <Link to={"/sign-in"}>
             <span className="text-blue-700">Sign in</span>
           </Link>
         </div>
 
         {error && <p className="text-red-500 mt-5">{error}</p>}
+      </div>
+      <div className="mt-auto">
+        <Footer/>
       </div>
     </div>
   )

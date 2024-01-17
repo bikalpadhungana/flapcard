@@ -199,13 +199,13 @@ export default function Profile() {
           <input onChange={(e) => setCoverPhoto(e.target.files[0])} type="file" ref={coverPhotoRef} hidden accept="image/*"  />
           <input onChange={(e) => setProfilePicture(e.target.files[0])} type="file" ref={userPhotoRef} hidden accept="image/*" />
           {/* yesma click garda call function */}
-          <img src={formData.user_cover_photo ? formData.user_cover_photo : (user.user_cover_photo ? user.user_cover_photo : cover_photo)} alt="coverphoto"></img>
+          <img onClick={() => { coverPhotoRef.current.click() }} src={formData.user_cover_photo ? formData.user_cover_photo : (user.user_cover_photo ? user.user_cover_photo : cover_photo)} alt="coverphoto" className="hover:cursor-pointer"></img>
           <span className="Change_cover text-center color text-slate-400 cursor-pointer" onClick={() => { coverPhotoRef.current.click() }}>Change cover photo</span>
           <p className="text-center text-sm">
             {coverPhotoUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 10MB)</span>) : (coverPhotoPercentage > 0 && coverPhotoPercentage < 100) ? (<span className="text-slate-700">{`Uploading ${coverPhotoPercentage}%`}</span>) : (coverPhotoPercentage === 100 && !coverPhotoUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
           </p>
           <hr />
-          <img src={formData.user_photo ? formData.user_photo : user.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center" />
+          <img onClick={() => { userPhotoRef.current.click() }} src={formData.user_photo ? formData.user_photo : user.user_photo} alt="Profile" className="rounded-full h-24 w-24 object-cover self-center hover:cursor-pointer" />
           {/* yo click garda same function call as above */}
           <span className="Change_profile text-center color text-slate-400 cursor-pointer" onClick={() => { userPhotoRef.current.click() } }>Change your Profile picture</span> 
           <p className="text-center text-sm">

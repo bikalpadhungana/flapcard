@@ -25,7 +25,7 @@ export default function CheckUserLoggedStatus() {
                     // update react auth state
                     dispatch({ type: 'SIGN_OUT_SUCCESS' });
 
-                    navigate('/sign-in');
+                    navigate('/');
                 }
                 return;
             }

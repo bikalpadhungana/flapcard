@@ -15,10 +15,10 @@ function About() {
       </div>
 
       <div className="lg:order-2 order-1 lg:pt-0 pt-[100px] lg:w-[700px]">
-        <h2 className="pb-3 text-center lg:text-left text-[clamp(1.1rem,2.8vw+1rem,2.2rem)] text-[#232946]">
+        <h2 className="pb-3 text-center lg:text-left text-[clamp(1.1rem,2.8vw+1rem,2.2rem)] text-[#232946] font-semibold">
           What is <span className="text-[#143385]">Flap?</span>
         </h2>
-        <p className="lg:mx-0 sm:mx-12 sm:text-[1.1rem] text-[1rem] text-center lg:text-left lg:px-0 md:px-9 sm:leading-7 leading-6 font-['Varta'] font-semibold">
+        <p className="lg:mx-0 sm:mx-12 sm:text-[1.1rem] text-[0.92rem] text-center lg:text-left lg:px-0 md:px-9 sm:leading-7 leading-6 font-['Varta'] font-semibold">
           Flap represents an advanced networking solution that leverages
           NFC-enabled digital business cards to redefine connectivity standards.
           Offered by esa innovation, these cards transcend traditional

@@ -146,7 +146,7 @@ function OrdersTable() {
           (record) =>{
             console.log(record.orderId)
           }
-        }s
+        }
       />
     </>
   );

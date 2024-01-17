@@ -7,6 +7,7 @@ import { useAuthContext } from "../hooks/use.auth.context";
 
 // components
 import Navbar from "../ui/Navbar";
+import Footer from "../ui/Footer";
 
 export default function Signin() {
 
@@ -56,19 +57,42 @@ export default function Signin() {
   }
 
   return (
-    <div>
+    <div className="h-screen flex flex-col ">
       <Navbar />
-      <div className='p-3 max-w-lg mx-auto'>
-        <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-          <input type='text' placeholder='Email' className='border p-3 rounded-lg' id='email' onChange={(e) => {setEmail(e.target.value)}} />
-          <input type='password' placeholder='Password' className='border p-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
-          <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign In'}</button>
+      <div className="p-3 px-9 max-w-lg mx-auto pt-16 w-full">
+        <h1 className="md:text-3xl text-2xl text-left font-semibold my-7">
+          Welcome back to Flap!
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-sm sm:text-base">
+          <input
+            type="text"
+            placeholder="Email"
+            className="border border-slate-400 py-2 sm:py-3 px-3   rounded-lg"
+            id="email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="border border-slate-400 py-2 sm:py-3 px-3   rounded-lg"
+            id="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <button
+            disabled={loading}
+            className="bg-[#143385] text-white  py-2 sm:py-3 px-3 rounded-lg  hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? "Loading..." : "Login"}
+          </button>
           <OAuth></OAuth>
         </form>
 
-        <div className='flex gap-2 mt-5'>
-          <p>Dont Have an accout?</p>
+        <div className="flex gap-2 mt-5">
+          <p>Don't have an account?</p>
           <Link to={"/sign-up"}>
             <span className="text-blue-700">Sign up</span>
           </Link>
@@ -76,6 +100,9 @@ export default function Signin() {
 
         {error && <p className="text-red-500 mt-5">{error}</p>}
       </div>
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
-  )
+  );
 }

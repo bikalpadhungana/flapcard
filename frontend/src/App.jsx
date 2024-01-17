@@ -23,8 +23,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Landing />} /> */}
-        <Route path="/" element={<PlaceOrder />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route
           path="/profile"

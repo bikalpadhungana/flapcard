@@ -2,6 +2,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { app } from '../firebase';
 import { useAuthContext } from '../hooks/use.auth.context';
 import { useNavigate } from 'react-router-dom';
+import { GoogleOutlined } from '@ant-design/icons'
 
 export default function OAuth() {
 
@@ -38,6 +39,6 @@ export default function OAuth() {
     }
 
     return (
-        <button onClick={handleGoogleClick} type="button" className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95">Continue with google</button>
+        <button onClick={handleGoogleClick} type="button" className="bg-gray-700 text-white rounded-lg hover:opacity-95 py-2 md:py-3 px-3 flex justify-center items-center gap-2"><GoogleOutlined className="text-lg"/><span>Sign in with Google</span></button>
     )
 }
