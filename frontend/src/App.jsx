@@ -52,10 +52,15 @@ export default function App() {
           setUserVisitFirstTime(false);
           // user visit state change huda re-render hunxa. tyo necessary xa ra?
         }
-    } catch (err) {
-      console.error(err.message);
+      } catch (err) {
+        console.error(err.message);
+      }
     }
+
+    if (refreshToken === null) {
+      return;
     }
+
     isLoggedIn();
   }, [refreshToken,navigate,userVisitFirstTime, dispatch]);
 
