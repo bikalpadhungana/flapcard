@@ -30,9 +30,9 @@ export default function Navbar() {
   return (
     <header className="bg-black py-4 sm:py-5 mb-[0px]">
       <div className="max-w-[1150px] mx-auto flex justify-between px-5 items-center">
-        <a href="/">
+        <Link to="/">
         <img src="/images/flap_white.png" alt="" className="w-[70px] sm:w-[80px] ps-1"/>
-        </a>
+        </Link>
         <ul className=" gap-8 text-white text-[0.9rem] items-center hidden md:visible md:flex">
           <Link to="/">
             <li>Home</li>
