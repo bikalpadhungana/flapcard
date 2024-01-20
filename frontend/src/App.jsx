@@ -18,29 +18,46 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export default function App() {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   const navigate = useNavigate();
   const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
-  const [userVisitFirstTime, setUserVisitFirstTime] = useState(true)
+  const [userVisitFirstTime, setUserVisitFirstTime] = useState(true);
+
   //first time profile redirection for logged in user
   useEffect( () => {
     async function isLoggedIn() {
       try {
-      const response = await fetch(
-        `https://backend-flap.esainnovation.com/api/token/${refreshToken}`
-      );
-      const data = await response.json();
+        const response = await fetch(
+          `https://backend-flap.esainnovation.com/api/token/${refreshToken}`
+        );
+        const data = await response.json();
 
-      if (data.message === "Token available" && userVisitFirstTime === true) {
-        navigate("/profile");
-        setUserVisitFirstTime(false)
-      }
+        // refresh token no longer available. User session ended
+        if (data.success === false) {
+            if (data.message === "Token unavailable") {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                localStorage.removeItem("user");
+
+                // update react auth state
+                dispatch({ type: 'SIGN_OUT_SUCCESS' });
+
+                navigate("/");
+            }
+            return;
+        }
+
+        if (data.message === "Token available" && userVisitFirstTime === true) {
+          navigate("/profile");
+          setUserVisitFirstTime(false);
+          // user visit state change huda re-render hunxa. tyo necessary xa ra?
+        }
     } catch (err) {
       console.error(err.message);
     }
     }
     isLoggedIn();
-  }, [refreshToken,navigate,userVisitFirstTime]);
+  }, [refreshToken,navigate,userVisitFirstTime, dispatch]);
 
   return (
     <Routes>
