@@ -25,8 +25,6 @@ export default function Profile() {
   const access_token = JSON.parse(localStorage.getItem('access_token'));
   const refresh_token = JSON.parse(localStorage.getItem('refresh_token'));
 
-  console.log(formData);
-
   useEffect(() => {
     if (profilePicture) {
       handleUploadFile(profilePicture, "profilePicture");

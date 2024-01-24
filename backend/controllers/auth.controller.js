@@ -173,6 +173,9 @@ const signin = async (req, res, next) => {
         }
 
         for ([key, value] of userPhoneNumberArr) {
+            if (key === "_id") {
+                continue;
+            }
             if (value !== null) {
                 restUserInfo[key] = value;
             }
@@ -232,6 +235,9 @@ const google = async (req, res, next) => {
             }
 
             for ([key, value] of userPhoneNumberArr) {
+                if (key === "_id") {
+                    continue;
+                }
                 if (value !== null) {
                     restUserInfo[key] = value;
                 }
