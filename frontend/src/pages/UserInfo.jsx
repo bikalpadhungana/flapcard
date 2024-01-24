@@ -131,12 +131,9 @@ export default function UserInfo() {
               <div className="container">
                 <div className="upper-container">
                   <img src={userInfo.user_cover_photo ? userInfo.user_cover_photo : cover_photo} alt="coverphoto" onClick={""}/>
-                 {/* aaile lai manually garya xu */}
                 </div>
                 <div className="img-sec">
                   <img src={ userInfo.user_photo } alt="User Profile Picture" />
-                
-
                 </div>
                 <div className="lower-container">
                   <hr />
@@ -145,19 +142,32 @@ export default function UserInfo() {
                     {/* <p className="caption"><span>UI/UX dev</span>, <a href="https://flap.esainnovation.com" target="_blank" rel="noreferrer">Flap</a></p> */}
                   </div>
                   <hr />
-                  <div className="card-info">
-                    <div className="info">
-                      <img src="/images/phone.png" alt="" height="30px" />
-                        <span>+977 { userInfo.phone_number }</span>
-                    </div>
-                    <div className="info">
-                      <img src="/images/mail.png" alt="" height="30px" />
+                    <div className="card-info">
+                      {userInfo.phone_number_1 && 
+                        (
+                        <div className="info">
+                          <img src="/images/phone.png" alt="" height="30px" />
+                          <span>+977 { userInfo.phone_number_1 }</span>
+                        </div>
+                      )} 
+                      {userInfo.phone_number_2 && 
+                        (
+                        <div className="info">
+                          <img src="/images/phone.png" alt="" height="30px" />
+                          <span>+977 { userInfo.phone_number_2 }</span>
+                        </div>
+                      )}
+                      <div className="info">
+                        <img src="/images/mail.png" alt="" height="30px" />
                         <span>{ userInfo.email }</span>
-                    </div>
-                    <div className="info">
-                      <img src="/images/organization-logo.png" alt="" height="30px" />
-                        <span>{ userInfo.organization }</span>
-                    </div>
+                      </div>
+                      {userInfo.organization && 
+                        (
+                        <div className="info">
+                          <img src="/images/organization-logo.png" alt="" height="30px" />
+                          <span>{ userInfo.organization }</span>
+                        </div>
+                      )}
                   </div>
                   <hr />
                   <p className="user-desc">Hi, I'm {userInfo.username} </p>

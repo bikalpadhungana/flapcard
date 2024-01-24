@@ -80,6 +80,14 @@ const signup = async (req, res, next) => {
         WHERE
         _id=?`, [userInfoUrl, user[0]._id]);
 
+        await pool.query(`
+        INSERT
+        INTO
+        user_phone_numbers
+        (user_id)
+        VALUES
+        (?)`, [user[0]._id]);
+
         // create tokens
         const token = createToken(user[0]._id);
         const refreshToken = createRefreshToken(user[0]._id);
@@ -126,28 +134,45 @@ const signin = async (req, res, next) => {
             return next(errorHandler(401, "Invalid Password"));
         }
 
-        const token = createToken(user[0]._id);
-        const refreshToken = createRefreshToken(user[0]._id);
+        const userId = user[0]._id;
+
+        const token = createToken(userId);
+        const refreshToken = createRefreshToken(userId);
         await pool.query(`
         INSERT
         INTO
         user_token_list
         (_id, refresh_token)
         VALUES
-        (?, ?)`, [user[0]._id, refreshToken]);
+        (?, ?)`, [userId, refreshToken]);
 
         const [user_urls] = await pool.query(`
         SELECT *
         FROM
         user_urls
         WHERE
-        _id=?`, [user[0]._id]);
+        _id=?`, [userId]);
+
+        const [user_phone_numbers] = await pool.query(`
+        SELECT
+        *
+        FROM
+        user_phone_numbers
+        WHERE
+        user_id=?`, [userId]); 
 
         const { password: userPass, userInfoUrl, ...restUserInfo } = user[0];
 
         const userUrlsArr = Object.entries(user_urls[0]);
+        const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
         for ([key, value] of userUrlsArr) {
+            if (value !== null) {
+                restUserInfo[key] = value;
+            }
+        }
+
+        for ([key, value] of userPhoneNumberArr) {
             if (value !== null) {
                 restUserInfo[key] = value;
             }
@@ -168,28 +193,45 @@ const google = async (req, res, next) => {
         const [user] = await pool.query(`SELECT * FROM user WHERE email=?`, [email]);
 
         if (user.length !== 0) {
-            const token = createToken(user[0]._id);
-            const refreshToken = createRefreshToken(user[0]._id);
+            const userId = user[0]._id;
+
+            const token = createToken(userId);
+            const refreshToken = createRefreshToken(userId);
             await pool.query(`
             INSERT
             INTO
             user_token_list
             (_id, refresh_token)
             VALUES
-            (?, ?)`, [user[0]._id, refreshToken]);
+            (?, ?)`, [userId, refreshToken]);
 
             const [user_urls] = await pool.query(`
             SELECT *
             FROM
             user_urls
             WHERE
-            _id=?`, [user[0]._id]);
+            _id=?`, [userId]);
+
+            const [user_phone_numbers] = await pool.query(`
+            SELECT
+            *
+            FROM
+            user_phone_numbers
+            WHERE
+            user_id=?`, [userId]);
 
             const { password, userInfoUrl, ...restUserInfo } = user[0];
 
             const userUrlsArr = Object.entries(user_urls[0]);
+            const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
             for ([key, value] of userUrlsArr) {
+                if (value !== null) {
+                    restUserInfo[key] = value;
+                }
+            }
+
+            for ([key, value] of userPhoneNumberArr) {
                 if (value !== null) {
                     restUserInfo[key] = value;
                 }
@@ -265,20 +307,20 @@ const google = async (req, res, next) => {
 
             const { password, userInfoUrl: infoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
-            const [user_urls] = await pool.query(`
-            SELECT *
-            FROM
-            user_urls
-            WHERE
-            _id=?`, [user[0]._id]);
+            // const [user_urls] = await pool.query(`
+            // SELECT *
+            // FROM
+            // user_urls
+            // WHERE
+            // _id=?`, [user[0]._id]);
 
-            const userUrlsArr = Object.entries(user_urls[0]);
+            // const userUrlsArr = Object.entries(user_urls[0]);
 
-            for ([key, value] of userUrlsArr) {
-                if (value !== null) {
-                    restUserInfo[key] = value;
-                }
-            }
+            // for ([key, value] of userUrlsArr) {
+            //     if (value !== null) {
+            //         restUserInfo[key] = value;
+            //     }
+            // }
             
             res.status(200).json({ restUserInfo, token, refreshToken });
         }

@@ -28,18 +28,26 @@ const getUserInfo = async (req, res, next) => {
         WHERE
         _id=(?)`, [userId]);
 
-        // const selectedUrl = userUrl[0].selected_url;
-
-        // const loadUrlQuery = `SELECT ${selectedUrl} FROM user_urls WHERE _id=${userId}`;
-
-        // const [loadUrl] = await pool.query(loadUrlQuery);
-        // const urlToBeLoaded = loadUrl[0][selectedUrl];
+        const [userPhoneNumbers] = await pool.query(`
+        SELECT
+        *
+        FROM
+        user_phone_numbers
+        WHERE
+        user_id=(?)`, [userId]);
 
         const { password, userInfoUrl, urlUsername: userUrlName, ...restUserInfo } = user[0];
 
         const userUrlsArr = Object.entries(userUrl[0]);
+        const userPhoneNumberArr = Object.entries(userPhoneNumbers[0]);
 
         for ([key, value] of userUrlsArr) {
+            if (value !== null) {
+                restUserInfo[key] = value;
+            }
+        }
+
+        for ([key, value] of userPhoneNumberArr) {
             if (value !== null) {
                 restUserInfo[key] = value;
             }
@@ -53,7 +61,7 @@ const getUserInfo = async (req, res, next) => {
 
 const getUserVCard = async (req, res, next) => {
 
-    const { username, email, phone_number, organization, user_photo } = req.body;
+    const { username, email, phone_number_1, phone_number_2, organization, user_photo } = req.body;
 
     try {
         let vCard = vCardsJS();
@@ -61,7 +69,8 @@ const getUserVCard = async (req, res, next) => {
         vCard.firstName = username.split(" ")[0];
         vCard.lastName = username.split(" ")[1];
         vCard.email = email;
-        vCard.cellPhone = phone_number;
+        vCard.cellPhone = phone_number_1;
+        vCard.pagerPhone = phone_number_2;
         vCard.organization = organization;
         vCard.photo.attachFromUrl(user_photo, 'png');
 

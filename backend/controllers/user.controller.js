@@ -4,10 +4,11 @@ const errorHandler = require('../middlewares/error.handler');
 
 const updateUser = async (req, res, next) => {
 
-    const { username, email, user_photo, user_cover_photo, phone_number, organization, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url} = req.body;
+    const { username, email, user_photo, user_cover_photo, phone_number_1, phone_number_2, organization, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url} = req.body;
     let { password } = req.body;
     const validVariables = [];
     const validUrlVariables = [];
+    const validPhoneNumberVariables = [];
 
     if (req.user._id != req.params.id) {
         return next(errorHandler(401, "ID invalid!!!"));
@@ -33,12 +34,10 @@ const updateUser = async (req, res, next) => {
         if (user_cover_photo) {
             validVariables.push("user_cover_photo");
         }
-        if (phone_number) {
-            validVariables.push("phone_number");
-        }
         if (organization) {
             validVariables.push("organization");
         }
+
         if (facebook_url) {
             validUrlVariables.push("facebook_url");
         }
@@ -53,6 +52,13 @@ const updateUser = async (req, res, next) => {
         }
         if (youtube_url) {
             validUrlVariables.push("youtube_url");
+        }
+
+        if (phone_number_1) {
+            validPhoneNumberVariables.push("phone_number_1");
+        }
+        if (phone_number_2) {
+            validPhoneNumberVariables.push("phone_number_2");
         }
 
         for (i = 0; i < validVariables.length; i++) {
@@ -75,6 +81,16 @@ const updateUser = async (req, res, next) => {
             _id=?`, [eval(validUrlVariables[i]), userId]);
         }
 
+        for (i = 0; i < validPhoneNumberVariables.length; i++) {
+            await pool.query(`
+            UPDATE
+            user_phone_numbers
+            SET
+            ${validPhoneNumberVariables[i]}=?
+            WHERE
+            user_id=?`, [eval(validPhoneNumberVariables[i]), userId]);
+        }
+
         const [user] = await pool.query(`
         SELECT *
         FROM
@@ -89,11 +105,26 @@ const updateUser = async (req, res, next) => {
         WHERE
         _id=?`, [userId]);
 
+        const [user_phone_numbers] = await pool.query(`
+        SELECT
+        *
+        FROM
+        user_phone_numbers
+        WHERE
+        user_id=?`, [userId]);
+
         const { password: userPass, userInfoUrl, ...restUserInfo } = user[0];
 
         const userUrlsArr = Object.entries(user_urls[0]);
+        const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
         for ([key, value] of userUrlsArr) {
+            if (value !== null) {
+                restUserInfo[key] = value;
+            }
+        }
+
+        for ([key, value] of userPhoneNumberArr) {
             if (value !== null) {
                 restUserInfo[key] = value;
             }
