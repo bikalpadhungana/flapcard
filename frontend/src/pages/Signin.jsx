@@ -56,6 +56,22 @@ export default function Signin() {
     }
   }
 
+  const toggleViewPassword = (e) => {
+    const passwordField = document.getElementById('password');
+
+    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+    passwordField.setAttribute("type", type);
+
+    if (type === "text") {
+      e.target.classList.add("bi-eye");
+      e.target.classList.remove("bi-eye-slash");
+    }
+    if (type === "password") {
+      e.target.classList.add("bi-eye-slash");
+      e.target.classList.remove("bi-eye");
+    }
+  }
+
   return (
     <div className="h-screen flex flex-col ">
       <Navbar />
@@ -67,21 +83,16 @@ export default function Signin() {
           <input
             type="text"
             placeholder="Email"
-            className="border border-slate-400 py-2 sm:py-3 px-3   rounded-lg"
+            className="outline-none border border-slate-400 py-2 sm:py-3 px-3 rounded-lg"
             id="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            className="border border-slate-400 py-2 sm:py-3 px-3   rounded-lg"
-            id="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
+          <div className="flex items-center justify-center border border-slate-400 rounded-lg"> 
+            <input type='password' placeholder='Password' className='outline-none w-[100%] py-2 md:py-3 px-3 rounded-lg' id='password' onChange={(e) => { setPassword(e.target.value) }} />
+            <i onClick={toggleViewPassword} className="bi bi-eye-slash mr-[10px] cursor-pointer" id="togglePassword"></i>
+          </div>
           <button
             disabled={loading}
             className="bg-[#143385] text-white  py-2 sm:py-3 px-3 rounded-lg  hover:opacity-95 disabled:opacity-80"
