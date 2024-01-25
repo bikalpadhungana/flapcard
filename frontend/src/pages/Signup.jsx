@@ -78,15 +78,34 @@ export default function Signup() {
     }
   }
 
+  const toggleViewPassword = (e) => {
+    const passwordField = document.getElementById('password');
+
+    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+    passwordField.setAttribute("type", type);
+
+    if (type === "text") {
+      e.target.classList.add("bi-eye");
+      e.target.classList.remove("bi-eye-slash");
+    }
+    if (type === "password") {
+      e.target.classList.add("bi-eye-slash");
+      e.target.classList.remove("bi-eye");
+    }
+  }
+
   return (
     <div className="h-screen flex flex-col justify-between">
       <Navbar />
       <div className='p-3 px-9 max-w-lg mx-auto w-full pt-16'>
         <h1 className='sm:text-3xl text-2xl text-left font-semibold my-7'>Create a new Account</h1>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4 text-sm sm:text-base'>
-          <input type='text' placeholder='Username' defaultValue={username} className='border border-slate-400 py-2 md:py-3 px-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
-          <input type='text' placeholder='Email' defaultValue={email} className='border border-slate-400 rounded-lg py-2 md:py-3 px-3 ' id='email' onChange={(e) => {setEmail(e.target.value)}} />
-          <input type='password' placeholder='Password' className='border border-slate-400 py-2 md:py-3 px-3 rounded-lg' id='password' onChange={(e) => {setPassword(e.target.value)}} />
+          <input type='text' placeholder='Username' defaultValue={username} className='outline-none border border-slate-400 py-2 md:py-3 px-3 rounded-lg' id='username' onChange={(e) => {setUsername(e.target.value)}} />
+          <input type='text' placeholder='Email' defaultValue={email} className='outline-none border border-slate-400 rounded-lg py-2 md:py-3 px-3 ' id='email' onChange={(e) => { setEmail(e.target.value) }} />
+          <div className="flex items-center justify-center border border-slate-400 rounded-lg"> 
+            <input type='password' placeholder='Password' className='outline-none w-[100%] py-2 md:py-3 px-3 rounded-lg' id='password' onChange={(e) => { setPassword(e.target.value) }} />
+            <i onClick={toggleViewPassword} className="bi bi-eye-slash mr-[10px] cursor-pointer" id="togglePassword"></i>
+          </div>
           <button disabled={loading} className='bg-[#143385] text-white py-2 md:py-3 px-3 rounded-lg hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign up'}</button>
           <OAuth></OAuth>
         </form>
