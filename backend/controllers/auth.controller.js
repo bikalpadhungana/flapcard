@@ -167,6 +167,9 @@ const signin = async (req, res, next) => {
         const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
         for ([key, value] of userUrlsArr) {
+            if (key === "_id") {
+                continue;
+            }
             if (value !== null) {
                 restUserInfo[key] = value;
             }
@@ -229,6 +232,9 @@ const google = async (req, res, next) => {
             const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
             for ([key, value] of userUrlsArr) {
+                if (key === "_id") {
+                    continue;
+                }
                 if (value !== null) {
                     restUserInfo[key] = value;
                 }

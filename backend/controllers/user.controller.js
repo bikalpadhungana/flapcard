@@ -119,12 +119,18 @@ const updateUser = async (req, res, next) => {
         const userPhoneNumberArr = Object.entries(user_phone_numbers[0]);
 
         for ([key, value] of userUrlsArr) {
+            if (key === "_id") {
+                continue;
+            }
             if (value !== null) {
                 restUserInfo[key] = value;
             }
         }
 
         for ([key, value] of userPhoneNumberArr) {
+            if (key === "_id") {
+                continue;
+            }
             if (value !== null) {
                 restUserInfo[key] = value;
             }
