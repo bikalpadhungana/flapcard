@@ -42,7 +42,7 @@ function Main() {
             alt=""
             className="absolute md:top-0 z-0 md:right-0 md:w-[480px] w-[420px] lg:left-[115px] lg:mx-1 mx-auto left-0 right-0" 
           />
-          <img src="/images/smallEllipse.png" alt="" />
+          
           <img
             src="/images/hollowEllipse.png"
             alt=""
