@@ -80,7 +80,7 @@ export default function Profile() {
       setUpdateSuccess(false);
       dispatch({ type: 'UPDATE_USER_START' });
 
-      if (formData.phone_number && formData.phone_number.length != 10) {
+      if ((formData.phone_number_1 && formData.phone_number_1.length != 10) || (formData.phone_number_2 && formData.phone_number_2.length != 10)) {
         return dispatch({ type: 'UPDATE_USER_FAILURE', payload: 'Phone number must be 10 digits' });
       }
 
