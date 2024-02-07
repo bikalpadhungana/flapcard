@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Main() {
 
   function handleOrder() {
-    window.location.href = "https://flap.esainnovation.com/place-order";
+    window.location.href = "https://www.instagram.com/flapcardnepal";
   }
   
   return (
