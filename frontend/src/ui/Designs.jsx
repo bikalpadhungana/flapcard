@@ -12,7 +12,7 @@ function Designs() {
       </p>
 
       <div className="flex flex-wrap gap-[35px] lg:justify-between justify-evenly">
-        <CardsDesign type="Platic" img="/images/plasticCard.png" desc="Classic and durable, ideal for everyday use."/>
+        <CardsDesign type="Plastic" img="/images/plasticCard.png" desc="Classic and durable, ideal for everyday use."/>
         <CardsDesign type="Wood" img="/images/woodCard.png" desc="Unique and eco-friendly, for a natural touch."/>
         <CardsDesign type="Metal" img="/images/metalCard.png" desc="Sleek and sophisticated, for a premium feel."/>
       </div>

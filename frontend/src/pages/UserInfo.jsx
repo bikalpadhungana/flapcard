@@ -170,7 +170,7 @@ export default function UserInfo() {
                       )}
                   </div>
                   <hr />
-                  <p className="user-desc">Hi, I'm {userInfo.username} </p>
+                  <p className="user-desc">Hi, I'm {userInfo.username.split(" ")[0]} </p>
                   <hr />
                     <div className="card-link">
                       {userInfo.facebook_url && (<a href={userInfo.facebook_url} target="_blank" rel="noreferrer"><div className="item"><img src="/images/facebook.png" alt="fb-logo" /></div></a>)}  
