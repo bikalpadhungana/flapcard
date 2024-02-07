@@ -14,13 +14,15 @@ function Footer() {
         Ⓒ{new Date().getFullYear()} FLAP - ALL RIGHTS ARE RESERVED
       </p>
       <div className="flex justify-center items-center gap-3 text-gray-400 text-sm sm:text-base">
-        <Link to="https://www.facebook.com/esainnovation">
+        <Link to="https://www.facebook.com/flapcardofficial">
           <FacebookFilled className="cursor-pointer" />
         </Link>
-        <Link to="https://www.instagram.com/esainnovation/">
+        <Link to="https://www.instagram.com/flapcardnepal/">
           <InstagramFilled className="cursor-pointer" />
         </Link>
-        <LinkedinFilled />
+        <Link to="https://www.linkedin.com/company/flapcard/">
+          <LinkedinFilled />
+        </Link>
       </div>
     </div>
   );
