@@ -4,7 +4,7 @@ const errorHandler = require('../middlewares/error.handler');
 
 const updateUser = async (req, res, next) => {
 
-    const { username, email, user_photo, user_cover_photo, phone_number_1, phone_number_2, organization, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url} = req.body;
+    let { username, email, user_photo, user_cover_photo, phone_number_1, phone_number_2, organization, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url} = req.body;
     let { password } = req.body;
     const validVariables = [];
     const validUrlVariables = [];
@@ -28,36 +28,66 @@ const updateUser = async (req, res, next) => {
 
             validVariables.push("password");
         }
-        if (user_photo) {
+        if (user_photo || user_photo === "") {
+            if (user_photo === "") {
+                user_photo = null;
+            }
             validVariables.push("user_photo");
         }
-        if (user_cover_photo) {
+        if (user_cover_photo || user_cover_photo === "") {
+            if (user_cover_photo === "") {
+                user_cover_photo = null;
+            }
             validVariables.push("user_cover_photo");
         }
-        if (organization) {
+        if (organization || organization === "") {
+            if (organization === "") {
+                organization = null;
+            }
             validVariables.push("organization");
         }
 
-        if (facebook_url) {
+        if (facebook_url || facebook_url === "") {
+            if (facebook_url === "") {
+                facebook_url = null;
+            }
             validUrlVariables.push("facebook_url");
         }
-        if (instagram_url) {
+        if (instagram_url || instagram_url === "") {
+            if (instagram_url === "") {
+                instagram_url = null;
+            }
             validUrlVariables.push("instagram_url");
         }
-        if (twitter_url) {
+        if (twitter_url || twitter_url === "") {
+            if (twitter_url === "") {
+                twitter_url = null;
+            }
             validUrlVariables.push("twitter_url");
         }
-        if (linkedin_url) {
+        if (linkedin_url || linkedin_url === "") {
+            if (linkedin_url === "") {
+                linkedin_url = null;
+            }
             validUrlVariables.push("linkedin_url");
         }
-        if (youtube_url) {
+        if (youtube_url || youtube_url === "") {
+            if (youtube_url === "") {
+                youtube_url = null;
+            }
             validUrlVariables.push("youtube_url");
         }
 
-        if (phone_number_1) {
+        if (phone_number_1 || phone_number_1 === "") {
+            if (phone_number_1 === "") {
+                phone_number_1 = null;
+            }
             validPhoneNumberVariables.push("phone_number_1");
         }
-        if (phone_number_2) {
+        if (phone_number_2 || phone_number_2 === "") {
+            if (phone_number_2 === "") {
+                phone_number_2 = null;
+            }
             validPhoneNumberVariables.push("phone_number_2");
         }
 
