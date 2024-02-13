@@ -8,61 +8,16 @@ import Signup from "./pages/Signup";
 import UserInfo from "./pages/UserInfo";
 import CreateCard from "./pages/CreateCard";
 import Dashboard from "./pages/Dashboard";
+import NotFound from "./pages/404notfound";
 
 import { useAuthContext } from "./hooks/use.auth.context";
 import AdminAppLayout from "./ui/AdminAppLayout";
 import Order from "./pages/Orders";
 import Users from "./pages/Users";
 import Landing from "./pages/Landing";
-import { useEffect } from "react";
-import { useState } from "react";
 
 export default function App() {
-  const { user, dispatch } = useAuthContext();
-  const navigate = useNavigate();
-  const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
-  const [userVisitFirstTime, setUserVisitFirstTime] = useState(true);
-
-  //first time profile redirection for logged in user
-  useEffect( () => {
-    async function isLoggedIn() {
-      try {
-        const response = await fetch(
-          `https://backend-flap.esainnovation.com/api/token/${refreshToken}`
-        );
-        const data = await response.json();
-
-        // refresh token no longer available. User session ended
-        if (data.success === false) {
-            if (data.message === "Token unavailable") {
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-                localStorage.removeItem("user");
-
-                // update react auth state
-                dispatch({ type: 'SIGN_OUT_SUCCESS' });
-
-                navigate("/");
-            }
-            return;
-        }
-
-        if (data.message === "Token available" && userVisitFirstTime === true) {
-          navigate("/profile");
-          setUserVisitFirstTime(false);
-          // user visit state change huda re-render hunxa. tyo necessary xa ra?
-        }
-      } catch (err) {
-        console.error(err.message);
-      }
-    }
-
-    if (refreshToken === null) {
-      return;
-    }
-
-    isLoggedIn();
-  }, [refreshToken,navigate,userVisitFirstTime, dispatch]);
+  const { user } = useAuthContext();
 
   return (
     <Routes>
@@ -88,6 +43,7 @@ export default function App() {
         <Route path="users" element={<Users />} />
         <Route path="orders" element={<Order />} />
       </Route>
+      <Route path="*" element={<NotFound/>}/>
     </Routes>
   );
 }

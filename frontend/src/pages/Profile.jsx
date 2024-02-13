@@ -120,40 +120,6 @@ export default function Profile() {
     }
   }
 
-  const handleDeleteUser = async () => {
-    try {
-      dispatch({ type: 'DELETE_USER_START' });
-
-      if (access_token && refresh_token) {
-
-        const response = await fetch(`https://backend-flap.esainnovation.com/api/user/delete/${user._id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${access_token}&${refresh_token}`
-          }
-        });
-  
-        const resData = await response.json();
-  
-        if (resData.success === false) {
-          dispatch({ type: 'DELETE_USER_FAILURE', payload: resData.message });
-          return;
-        }
-  
-        dispatch({ type: 'DELETE_USER_SUCCESS' });
-        localStorage.removeItem('user');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-
-      } else {
-        dispatch({ type: 'DELETE_USER_FAILURE', payload: 'Forbidden' });
-      }
-
-    } catch (error) {
-      dispatch({ type: 'DELETE_USER_FAILURE', payload: error.message });
-    }
-  }
-
   const handleSignOut = async () => {
     try {
       dispatch({ type: 'SIGN_OUT_START' });
@@ -212,10 +178,11 @@ export default function Profile() {
           <hr />
           <input type="text" defaultValue={user.username} placeholder="username" id="username" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.email} placeholder="email" id="email" className="border p-3 rounded-lg" onChange={handleChange} />
-          <input type="password" placeholder="password" id="password" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="password" placeholder="password" id="password" className="border p-3 rounded-lg placeholder-blue-300" onChange={handleChange} />
           <input type="number" defaultValue={user.phone_number_1} placeholder="phone number" id="phone_number_1" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="number" defaultValue={user.phone_number_2} placeholder="phone number" id="phone_number_2" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.organization} placeholder="organization" id="organization" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.designation} placeholder="designation" id="designation" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.facebook_url} placeholder="facebook" id="facebook_url" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.instagram_url} placeholder="instagram" id="instagram_url" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.twitter_url} placeholder="twitter" id="twitter_url" className="border p-3 rounded-lg" onChange={handleChange} />
