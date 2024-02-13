@@ -26,7 +26,7 @@ export default function PlaceOrder() {
 
   const cardColors = {
     'black': '#07090e',
-    'cyan': '#0bb2ef',
+    'cyan': '#CBD1F0',
     'pink': '#fecca5',
     'dark-grey': '#2b2a2b',
     'grey': '#8d807f',
@@ -68,7 +68,7 @@ export default function PlaceOrder() {
       }
 
       alert("Card Order Placed");
-      
+
     }
 
     // user filled the card data and then signed up. 
@@ -138,48 +138,50 @@ export default function PlaceOrder() {
   if (!user) {
     return (
       <div>
-        <Navbar />
-          <div className="flex flex-col md:flex-row gap-8 md:gap-20 max-w-full mx-auto md:ml-24 md:mt-8">
-              <div className="flex flex-col">  
+          <Navbar />
+          <div className="flex flex-col lg:flex-row self-center justify-center sm:gap-10 lg:gap-5">
+              <div className="flex flex-col w-auto md:w-[500px] lg:w-[700px]">  
                   {cardView === "front" ? 
-                    (<div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
-                      <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
-                        <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-7 pt-36 md:pt-60">{username}</p>
-                      </div>
-                      <button onClick={handleCardViewChange} ref={cardBackDiv} id="back" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
-                        Back
-                      </button>
-                    </div>) :
+                    (<div className="flex flex-col max-w-3xl md:max-w7-3xl h-60 md:h-96 my-8 mx-5 border-2 border-brand_1 rounded-xl  ">
+                    <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover flex self-center">
+                      <p className="text-white text-base text-left md:text  -lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">{username}</p>
+                    </div>
+                    <button onClick={handleCardViewChange} ref={cardBackDiv} id="back" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
+                      Back
+                    </button>
+                  </div>)  :
                     (
-                      <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
-                        <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
-
-                          <img src={exampleQr} className="w-16 md:w-24 mt-14 md:mt-24 ml-32 md:ml-60"></img>
+                      <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-brand_1 rounded-xl  ">
+                      <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover flex justify-center items-center">
+                        <div className="h-13 p-2 bg-[rgb(255,255,255)] rounded">
+                        <img src={exampleQr} className="h-12 md:h-20 invert"></img>
                         </div>
-                        <button onClick={handleCardViewChange} ref={cardFrontDiv} id="front" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
-                          Front
-                        </button>
                       </div>
+                      <button onClick={handleCardViewChange} ref={cardFrontDiv} id="front" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
+                        Front
+                      </button>
+                    </div>  
                     )
                   }
-                <div className="flex max-w-xs md:max-w-3xl mx-auto md:ml-5">
-                    <button onClick={handleColorChange} id="black" className="w-10 md:w-20 h-10 md:ml-0 bg-card-color-1 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="cyan" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-2 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="pink" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-3 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="dark-grey" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-4 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="grey" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-5 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="navy-blue" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-6 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                    <button onClick={handleColorChange} id="green" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-7 hover:w-12 hover:md:w-24 hover:md:ml-9 duration-500"></button>
-                </div>
+                <div className="flex flex-row my-2 mx-auto md:ml-5">
+    <button onClick={handleColorChange} id="black" className="w-10 md:w-20 h-10 md:ml-0  bg-card-color-1 duration-500"></button>
+    <button onClick={handleColorChange} id="cyan" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-2 duration-500"></button>
+    <button onClick={handleColorChange} id="pink" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-3 duration-500"></button>
+    <button onClick={handleColorChange} id="dark-grey" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-4 duration-500"></button>
+    <button onClick={handleColorChange} id="grey" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-5 duration-500"></button>
+    <button onClick={handleColorChange} id="navy-blue" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-6 duration-500"></button>            
+    <button onClick={handleColorChange} id="green" className="w-10 md:w-20 h-10 ml-2 md:ml-5 bg-card-color-7 duration-500"></button>
+</div>
+
               </div>
               <div className="flex flex-col">
-                <div className="max-w-3xl mx-auto mb-5 md:ml-10 md:my-auto p-10 border-2 border-navbar rounded-xl">
+                <div className="max-w-3xl mx-auto mt-8 p-10 border-2 border-brand_1 rounded-xl">
                     <form className="flex flex-col gap-5">
                       <input onChange={handleChange} type='text' placeholder='Username' className='w-60 md:w-96 border p-3 rounded-lg' id='username' />
                       <input onChange={handleChange} type='text' placeholder='Email' className='w-60 md:w-96 border p-3 rounded-lg' id='email' />
                       <input onChange={handleChange} type='number' placeholder='Phone number' className='w-60 md:w-96 border p-3 rounded-lg' id='phone_number' />
                       <input onChange={handleChange} type='text' placeholder='Organization' className='w-60 md:w-96 border p-3 rounded-lg' id='organization' />
-                      <button onClick={handleCreateCard} className='bg-navbar text-black p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>Create Card</button>
+                      <button onClick={handleCreateCard} className='bg-brand_main text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>Create Card</button>
                     </form>
                 </div>
                 {error && <p className="text-red-500 mb-4 ml-10">{error}</p>}
@@ -195,7 +197,7 @@ export default function PlaceOrder() {
         <div className="flex flex-col md:flex-row gap-8 md:gap-20 max-w-full mx-auto">
               <div className="flex flex-col">  
                   {cardView === "front" ? 
-                    (<div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
+                    (<div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-brand_1 rounded-xl">
                       <div ref={cardFrontDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
                         <p className="text-white text-base md:text-lg font-medium ml-3 md:ml-5 pt-36 md:pt-60">{username}</p>
                       </div>
@@ -204,10 +206,10 @@ export default function PlaceOrder() {
                       </button>
                     </div>) :
                     (
-                      <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-navbar rounded-xl">
-                        <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover">
+                      <div className="flex flex-col max-w-3xl md:max-w-3xl h-60 md:h-96 my-8 mx-5 border-2 border-brand_1 rounded-xl ">
+                        <div ref={cardBackDiv} className="w-72 md:w-9/12 h-3/4 mx-auto my-7 md:my-12 rounded-xl bg-card-color-1 bg-world-map bg-cover flex justify-center items-center">
 
-                          <img src={exampleQr} className="w-16 md:w-24 mt-14 md:mt-24 ml-32 md:ml-60"></img>
+                          <img src={exampleQr} className="h-20"></img>
                         </div>
                         <button onClick={handleCardViewChange} ref={cardFrontDiv} id="front" className="w-12 h-6 bg-card-color-1 -mt-6 md:-mt-10 ml-3 md:ml-8 text-white text-xs md:text-sm text-center">
                           Front

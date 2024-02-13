@@ -4,17 +4,20 @@ import Main from "../ui/Main";
 import About from "../ui/About";
 import CustomDesignQuery from "../ui/CustomDesignQuery";
 import Footer from "../ui/Footer";
-
+import CheckUserLoggedStatus from "../utilities/CheckUserLoggedStatus";
+// import Testimonial from "./Testimonial";
 
 function Landing() {
   return (
     <>
+      <CheckUserLoggedStatus />
       <Navbar />
       <Main />
       <main className="max-w-[1152px] mx-auto px-5">
         <About />
         <Designs />
         <CustomDesignQuery />
+        {/* <Testimonial /> */}
         <div className="py-12">
           <h2 className="text-[clamp(1.1rem,2.8vw+1rem,2.2rem)] text-center font-semibold pb-9 text-[#232946]">
             How does Flap <span className="text-[#143385]">Works?</span>
