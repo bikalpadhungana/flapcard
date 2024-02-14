@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 // yo import is manual change it please!
 import cover_photo from "/images/flap_logo.jpeg";
+import UserNotFound from "../ui/userNotFound";
 
 export default function UserInfo() {
   const { id } = useParams();
@@ -123,7 +124,9 @@ export default function UserInfo() {
       <div>
         {!userPresent ? (
           <div>
-            User not found
+            
+            <UserNotFound/>
+
           </div>
         ) : loading ? (<div>Loading</div>) : (
           <div>
