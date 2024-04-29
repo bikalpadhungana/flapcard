@@ -171,6 +171,13 @@ export default function UserInfo() {
                           <span>{ userInfo.organization }</span>
                         </div>
                       )}
+                      {userInfo.designation && 
+                        (
+                        <div className="info">
+                          <img src="/images/customer.png" alt="" height="30px" />
+                          <span>{ userInfo.designation }</span>
+                        </div>
+                      )}
                   </div>
                   <hr />
                   <p className="user-desc">Hi, I'm {userInfo.username.split(" ")[0]} </p>
