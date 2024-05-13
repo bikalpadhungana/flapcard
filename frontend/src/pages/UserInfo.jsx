@@ -132,8 +132,11 @@ export default function UserInfo() {
           <div>
             <section className="main">
               <div className="container">
-                <div className="upper-container">
-                  <img src={userInfo.user_cover_photo ? userInfo.user_cover_photo : cover_photo} alt="coverphoto" onClick={""}/>
+                  <div className="upper-container">
+                    {userInfo.user_cover_photo ? (
+                      <img src={userInfo.user_cover_photo} onClick={""}/>
+                    ) : 
+                    <></>}         
                 </div>
                 <div className="img-sec">
                   <img src={ userInfo.user_photo } alt="User Profile Picture" />
