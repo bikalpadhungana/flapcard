@@ -35,16 +35,15 @@
 .upper-container{
     width: 100%;
     height: 230px;
-    /* background: url('/images/flap_logo.jpeg'); */
     background-size: cover;
     background-position: center center;
 }
 
-.upper-container img{
+.upper-container img{   
     width: 100%;
-    height: 235px;
-    scale:auto;
-    border-image: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* standard size 153px */

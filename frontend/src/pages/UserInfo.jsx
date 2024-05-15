@@ -24,16 +24,9 @@ export default function UserInfo() {
           return;
         }
 
-        // check current user url
-        // if (resData.selectedUrl === 'default_url') {
         setUserInfo(resData.user);
         setLoading(false);
         setUserPresent(true);
-        // } else {
-        //   if (resData.url) {
-        //     window.location.replace(resData.url);
-        //   }
-        // }
   
       };
   
@@ -124,9 +117,7 @@ export default function UserInfo() {
       <div>
         {!userPresent ? (
           <div>
-            
             <UserNotFound/>
-
           </div>
         ) : loading ? (<div>Loading</div>) : (
           <div>
