@@ -156,7 +156,6 @@ a{
 }
 
 .download{
-    
     background-color: #1E4496;
     height: 36px;
     width: 180px;
@@ -178,4 +177,35 @@ a{
 
 .download img{
     height: 20px;
+}
+
+/* CSS for profile crop overlay */
+
+.profile-overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.profile-popup {
+  background-color: white;
+  width: 80%;
+  height: 80%;
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.crop-tool {
+    position: inherit;
+    z-index: 3;
 }
