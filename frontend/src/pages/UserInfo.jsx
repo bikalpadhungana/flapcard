@@ -87,17 +87,17 @@ export default function UserInfo() {
             <div className="lower-container">
               <hr />
               <div className="card-body">
-                <h2 className="name">John Doe</h2>
+                <h2 className="name">Flap Card</h2>
               </div>
               <hr />
               <div className="card-info">
                 <div className="info">
                   <img src="/images/phone.png" alt="" height="30px" />
-                  <span>+977 9812345678</span>
+                  <span>+977 9802365432</span>
                 </div>
                 <div className="info">
                   <img src="/images/mail.png" alt="" height="30px" />
-                  <span>example@gmail.com</span>
+                  <span>card@flap.com.np</span>
                 </div>
                 <div className="info">
                   <img src="/images/organization-logo.png" alt="" height="30px" />
@@ -112,6 +112,10 @@ export default function UserInfo() {
                 <a href="#"><div className="item"><img src="/images/twitter_2.png" alt="twitter-logo" /></div></a>
                 <a href="#"><div className="item"><img src="/images/linked-in.png" alt="linkedin-logo" /></div></a>
                 <a href="#"><div className="item"><img src="/images/insta.png" alt="instagram-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/youtube.png" alt="youtube-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/tripreview.png" alt="tripreview-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/website.png" alt="website-logo" /></div></a>
+                <a href="#"><div className="item"><img src="/images/googlereview.png" alt="google-logo" /></div></a>
               </div>
               <hr />
             </div>
@@ -163,7 +167,7 @@ export default function UserInfo() {
                     <p className="text-center text-sm">
                       {contactPhotoUploadError ? (<span className="text-red-700">Error Uploading Image (must be less than 10MB)</span>) : (contactPhotoUploadPercentage > 0 && contactPhotoUploadPercentage < 100) ? (<span className="text-slate-700">{`Uploading ${contactPhotoUploadPercentage}%`}</span>) : (contactPhotoUploadPercentage === 100 && !contactPhotoUploadError) ? (<span className="text-green-700">Image Uploaded Successfully!</span>) : ""}
                     </p>
-                    <button type="button" onClick={() => alert('Contact information submitted')} className="bg-[#143385] text-white rounded-lg uppercase p-3 hover:opacity-95">Submit</button>
+                    <button type="button" onClick={() => alert('Contact information submitted')} className="bg-[#1c74ba] text-white rounded-lg uppercase p-3 hover:opacity-95">Submit</button>
                   </form>
                 </div>
               </div>
@@ -251,6 +255,27 @@ export default function UserInfo() {
                       <a href={userInfo.youtube_url} target="_blank" rel="noreferrer">
                         <div className="item">
                           <img src="/images/youtube.png" alt="youtube-logo" />
+                        </div>
+                      </a>
+                    )}
+                    {userInfo.googlereview_url && (
+                      <a href={userInfo.googlereview_url} target="_blank" rel="noreferrer">
+                        <div className="item">
+                          <img src="/images/googlereview.png" alt="google-logo" />
+                        </div>
+                      </a>
+                    )}
+                    {userInfo.tripreview_url && (
+                      <a href={userInfo.tripreview_url} target="_blank" rel="noreferrer">
+                        <div className="item">
+                          <img src="/images/tripreview.png" alt="tripadvisor-logo" />
+                        </div>
+                      </a>
+                    )}
+                    {userInfo.website_url && (
+                      <a href={userInfo.website_url} target="_blank" rel="noreferrer">
+                        <div className="item">
+                          <img src="/images/website.png" alt="website-logo" />
                         </div>
                       </a>
                     )}

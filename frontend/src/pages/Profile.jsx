@@ -188,7 +188,10 @@ export default function Profile() {
           <input type="text" defaultValue={user.twitter_url} placeholder="twitter" id="twitter_url" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.linkedin_url} placeholder="linkedin" id="linkedin_url" className="border p-3 rounded-lg" onChange={handleChange} />
           <input type="text" defaultValue={user.youtube_url} placeholder="youtube" id="youtube_url" className="border p-3 rounded-lg" onChange={handleChange} />
-          <button disabled={loading} className="bg-[#143385] text-white rounded-lg uppercase p-3 hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
+          <input type="text" defaultValue={user.googlereview_url} placeholder="googlereview" id="googlereview_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.tripreview_url} placeholder="tripreview" id="tripreview_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <input type="text" defaultValue={user.website_url} placeholder="website" id="website_url" className="border p-3 rounded-lg" onChange={handleChange} />
+          <button disabled={loading} className="bg-[#1c73ba] text-white rounded-lg uppercase p-3 hover:opacity-95 disabled:opacity-80">{loading ? "Loading..." : "Update"}</button>
         </form>
 
         <div className="flex justify-between mt-5">

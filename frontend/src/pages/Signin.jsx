@@ -95,7 +95,7 @@ export default function Signin() {
           </div>
           <button
             disabled={loading}
-            className="bg-[#143385] text-white  py-2 sm:py-3 px-3 rounded-lg  hover:opacity-95 disabled:opacity-80"
+            className="bg-[#1c73ba] text-white  py-2 sm:py-3 px-3 rounded-lg  hover:opacity-95 disabled:opacity-80"
           >
             {loading ? "Loading..." : "Login"}
           </button>

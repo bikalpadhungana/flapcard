@@ -4,7 +4,7 @@ const errorHandler = require('../middlewares/error.handler');
 
 const updateUser = async (req, res, next) => {
 
-    let { username, email, user_photo, user_cover_photo, phone_number_1, phone_number_2, organization, designation, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url} = req.body;
+    let { username, email, user_photo, user_cover_photo, phone_number_1, phone_number_2, organization, designation, facebook_url, instagram_url, twitter_url, linkedin_url, youtube_url, googlereview_url, tripreview_url, website_url} = req.body;
     let { password } = req.body;
     const validVariables = [];
     const validUrlVariables = [];
@@ -83,7 +83,24 @@ const updateUser = async (req, res, next) => {
             }
             validUrlVariables.push("youtube_url");
         }
-
+        if (googlereview_url || googlereview_url === "") {
+            if (googlereview_url === "") {
+                googlereview_url = null;
+            }
+            validUrlVariables.push("googlereview_url");
+        }
+        if (tripreview_url || tripreview_url === "") {
+            if (tripreview_url === "") {
+                tripreview_url = null;
+            }
+            validUrlVariables.push("tripreview_url");
+        }
+        if (website_url || website_url === "") {
+            if (website_url === "") {
+                website_url = null;
+            }
+            validUrlVariables.push("website_url");
+        }
         if (phone_number_1 || phone_number_1 === "") {
             if (phone_number_1 === "") {
                 phone_number_1 = null;

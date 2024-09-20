@@ -106,7 +106,7 @@ export default function Signup() {
             <input type='password' placeholder='Password' className='outline-none w-[100%] py-2 md:py-3 px-3 rounded-lg' id='password' onChange={(e) => { setPassword(e.target.value) }} />
             <i onClick={toggleViewPassword} className="bi bi-eye-slash mr-[10px] cursor-pointer" id="togglePassword"></i>
           </div>
-          <button disabled={loading} className='bg-[#143385] text-white py-2 md:py-3 px-3 rounded-lg hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign up'}</button>
+          <button disabled={loading} className='bg-[#1c73ba] text-white py-2 md:py-3 px-3 rounded-lg hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Sign up'}</button>
           <OAuth></OAuth>
         </form>
 
