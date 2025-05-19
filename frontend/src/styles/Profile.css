@@ -1,0 +1,79 @@
+/* Custom styles for Profile page to complement Tailwind CSS */
+
+/* Image Upload Buttons */
+.upload-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  border-color: #4f46e5; /* Tailwind's indigo-600 */
+}
+
+/* Input Fields with Icons */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.input-with-icon input:focus + i {
+  color: #4f46e5; /* Tailwind's indigo-600 */
+}
+
+/* Custom Select Dropdown */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.5em;
+}
+
+/* Submit Button */
+.submit-btn {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.submit-btn:disabled {
+  cursor: not-allowed;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .input-with-icon i {
+    font-size: 0.9rem;
+  }
+
+  .upload-btn {
+    height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-3,
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}

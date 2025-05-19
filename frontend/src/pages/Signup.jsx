@@ -24,6 +24,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Fetched data:", data);
     if (data) {
       setUsername(data.username);
       setEmail(data.email);
@@ -51,7 +52,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await fetch('https://backend-flap.esainnovation.com/api/auth/signup', {
+      const res = await fetch('https://backend.flaap.me/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -71,7 +72,7 @@ export default function Signup() {
       localStorage.setItem('access_token', JSON.stringify(resData.token));
       localStorage.setItem('refresh_token', JSON.stringify(resData.refreshToken));
       
-      navigate('/home');
+      navigate('/profile');
 
     } catch (error) {
       dispatch({ type: 'SIGN_IN_FAILURE', payload: error });
@@ -116,7 +117,11 @@ export default function Signup() {
             <span className="text-blue-700">Sign in</span>
           </Link>
         </div>
-
+        <div className="flex gap-2 mt-5">
+  <a href={`https://www.flaap.me/privacypolicy`} target="_blank" rel="noopener noreferrer">
+    <h11 className="text-red-700 cursor-pointer">Read Our Privacy Policy</h11>
+  </a>
+</div>
         {error && <p className="text-red-500 mt-5">{error}</p>}
       </div>
       <div className="mt-auto">

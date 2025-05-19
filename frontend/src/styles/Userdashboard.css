@@ -1,0 +1,613 @@
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+/* Dashboard Wrapper */
+.dashboard-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loading Screen */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.loading-screen p {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+/* Main Section */
+.main-section {
+  flex: 1;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* QR Code Section */
+.qr-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.qr-section:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+.qr-code-container {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+}
+
+.qr-code-container.shrunk {
+  width: 100px;
+  height: 100px;
+}
+
+.qr-code-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+.qr-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.toggle-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.toggle-switch {
+  width: 50px;
+  height: 28px;
+  border-radius: 15px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch.checked {
+  background-color: #1c73ba; /* Default color, overridden by userInfo.user_colour */
+}
+
+.toggle-knob {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.checked .toggle-knob {
+  transform: translateX(22px);
+}
+
+.qr-instruction {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* NFC Share Button */
+.nfc-share-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: 2px solid #1c73ba; /* Default color, overridden by userInfo.user_colour */
+  border-radius: 8px;
+  color: #1c73ba;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  margin: 0 auto 25px;
+  display: flex;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nfc-share-button:hover {
+  background-color: #1c73ba;
+  color: #fff;
+}
+
+.nfc-share-button i {
+  font-size: 1.25rem;
+}
+
+/* Cover Section */
+.cover-container {
+  position: relative;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.cover-media, .cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.cover-container:hover .cover-media,
+.cover-container:hover .cover-image {
+  transform: scale(1.05);
+}
+
+.cover-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+}
+
+/* Profile Header */
+.profile-header {
+  margin-top: -60px;
+  text-align: center;
+  position: relative;
+}
+
+.avatar-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.profile-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.share-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.share-button svg {
+  font-size: 1.5rem;
+  color: #1c73ba; /* Default color, overridden by userInfo.user_colour */
+}
+
+.share-button:hover svg {
+  color: #155a8a;
+}
+
+.profile-title, .profile-organization {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 8px 0;
+}
+
+/* Info Card */
+.info-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 25px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.info-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo-section {
+  width: 200px;
+  padding: 20px;
+  margin: -54px 0; /* Adds top and bottom margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -15px;
+}
+
+
+.org-logo {
+  max-width: 100px;
+  height: auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  color: #1c73ba; /* Default color, overridden by userInfo.user_colour */
+}
+
+.info-link {
+  font-size: 1.1rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-link:hover {
+  color: #1c73ba;
+}
+
+.user-description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+
+/* Social Grid */
+.social-grid {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f1f3f5;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.social-link:hover {
+  background: #e9ecef;
+  transform: scale(1.1);
+}
+
+.social-link i {
+  font-size: 1.5rem;
+  color: #1c73ba; /* Default color, overridden by userInfo.user_colour */
+}
+
+/* Footer */
+.dashboard-footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #1c73ba; /* Default color, can be overridden */
+  color: #fff;
+  margin-top: auto;
+}
+
+.footer-container p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Example Page Specific Styles */
+.avatar-section img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #1c73ba;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 20px 0;
+}
+
+.user-info .profile-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.contact-info .info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.info-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .cover-container {
+    height: 200px;
+  }
+
+  .profile-header {
+    margin-top: -50px;
+  }
+
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-name {
+    font-size: 1.75rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .qr-code-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .qr-code-container.shrunk {
+    width: 120px;
+    height: 120px;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-link i {
+    font-size: 1.25rem;
+  }
+
+  .user-header {
+    padding: 10px 15px;
+  }
+
+  .share-button svg {
+    font-size: 1.25rem;
+  }
+
+  .nfc-share-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .nfc-share-button i {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cover-container {
+    height: 150px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-name {
+    font-size: 1.5rem;
+  }
+
+  .qr-code-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  .qr-code-container.shrunk {
+    width: 100px;
+    height: 100px;
+  }
+
+  .qr-toggle {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toggle-switch {
+    width: 40px;
+    height: 24px;
+  }
+
+  .toggle-knob {
+    width: 20px;
+    height: 20px;
+  }
+
+  .toggle-switch.checked .toggle-knob {
+    transform: translateX(16px);
+  }
+
+  .social-link {
+    width: 36px;
+    height: 36px;
+  }
+
+  .social-link i {
+    font-size: 1rem;
+  }
+
+  .info-item {
+    gap: 10px;
+  }
+
+  .info-icon {
+    font-size: 1.25rem;
+  }
+
+  .info-link {
+    font-size: 1rem;
+  }
+
+  .org-logo {
+    max-width: 80px;
+  }
+}
+
+
+
+.qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.qr-code-container canvas {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+}
+
+.qr-code-container.shrunk canvas {
+  width: 100px;
+  height: 100px;
+}
+
+.qr-toggle {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.toggle-label {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.toggle-switch.checked {
+  background-color: #1c73ba;
+}
+
+.toggle-knob {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s;
+}
+
+.toggle-switch.checked .toggle-knob {
+  transform: translateX(20px);
+}
+
+

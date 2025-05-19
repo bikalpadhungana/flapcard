@@ -1,0 +1,215 @@
+/* Business Profile Styles */
+.business-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .business-cover {
+    height: 300px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+  }
+  
+  .business-cover-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .business-profile-section {
+    position: relative;
+    padding: 2rem;
+    text-align: center;
+    margin-top: -100px;
+  }
+  
+  .business-logo-container {
+    display: inline-block;
+    position: relative;
+    border: 4px solid white;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    background: white;
+  }
+  
+  .business-main-logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+  
+  .business-organization-logo {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    border: 3px solid white;
+    border-radius: 12px;
+    background: white;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .business-info-section {
+    padding: 2rem;
+    background: #f8f9fa;
+  }
+  
+  .business-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .business-contact-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+  }
+  
+  .business-contact-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .business-social-section {
+    padding: 2rem;
+    background: white;
+  }
+  
+  .business-social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+  
+  .business-social-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .business-social-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  .business-review-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .business-contact-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .business-main-logo {
+      width: 150px;
+      height: 150px;
+    }
+    
+    .business-organization-logo {
+      width: 60px;
+      height: 60px;
+      bottom: -15px;
+      right: -15px;
+    }
+  }
+  .review-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .fa-star {
+    color: #f59e0b;
+  }
+  
+  .text-amber-500 {
+    color: #f59e0b;
+  }
+  .review-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .fa-arrow-right {
+    transition: transform 0.2s ease;
+  }
+  
+  .fa-edit {
+    transition: transform 0.3s ease;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-2px);
+  }
+
+
+  .section-title {
+    text-align: center;
+    font-size: 1.5rem; /* Increased for better visibility */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  /* Messaging Grid */
+  .messaging-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); /* Adjusted for better spacing */
+    gap: 1.5rem; /* Increased gap for improved breathing space */
+    justify-content: center; /* Horizontally centers items in the grid */
+    align-items: center; /* Vertically centers items in their grid cells */
+    max-width: 400px; /* Optional: Keep the grid compact */
+    margin: 0 auto; /* Center the entire grid */
+    margin-top: -36px;
+  }
+
+  
+  /* Messaging Items */
+  .messaging-grid .item {
+    display: flex;
+    justify-content: center; /* Center icon horizontally */
+    align-items: center; /* Center icon vertically */
+    width: 70px; /* Slightly larger for a bolder appearance */
+    height: 70px; /* Ensures perfect circle */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 50%; /* Makes the items circular */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Softer shadow for modern look */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    font-size: 36px;
+    margin-left: 0px;
+  }
+  
+  .messaging-grid .item:hover {
+    transform: scale(1.15); /* Slightly larger scaling for hover effect */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+    background-color: rgba(0, 28, 115, 0.08); /* Subtle background tint */
+    
+  }
+  
+
+

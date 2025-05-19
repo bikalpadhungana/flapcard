@@ -52,7 +52,7 @@ export default function PlaceOrder() {
   useEffect(() => {
     const placeUserCardOrder = async () => {
 
-      const response = await fetch("https://backend-flap.esainnovation.com/api/order/placeOrder", {
+      const response = await fetch("https://backend.flaap.me/api/order/placeOrder", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

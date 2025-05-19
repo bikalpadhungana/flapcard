@@ -18,7 +18,7 @@ function CustomDesignQueryForm() {
           <input
             type="text"
             id="fullName"
-            placeholder="John Doe"
+            placeholder="Flap Card"
             className="px-2 py-1 rounded-md"
             {...register("fullName")}
           />
@@ -28,7 +28,7 @@ function CustomDesignQueryForm() {
           <input
             type="number"
             id="phoneNumber"
-            placeholder="+977 9812345678"
+            placeholder="+977 9802365432"
             className="px-2 py-1 rounded-md"
             {...register("phoneNumber")}
           />
@@ -38,7 +38,7 @@ function CustomDesignQueryForm() {
           <input
             type="text"
             id="email"
-            placeholder="john@gmail.com"
+            placeholder="card@flap.com.np"
             className="px-2 py-1 rounded-md"
             {...register("email")}
           />
@@ -71,7 +71,7 @@ function CustomDesignQueryForm() {
           </button>
           <button
             type="submit"
-            className="bg-[#202A83] text-white px-4 py-1 rounded-md text-sm hover:opacity-90 ease-in-out duration-200"
+            className="bg-[#1c73ba] text-white px-4 py-1 rounded-md text-sm hover:opacity-90 ease-in-out duration-200"
           >
             Submit
           </button>

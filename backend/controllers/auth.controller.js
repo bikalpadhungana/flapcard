@@ -70,7 +70,7 @@ const signup = async (req, res, next) => {
         WHERE
         _id=?`, [urlUsername, user[0]._id]);
 
-        const userInfoUrl = `https://flap.esainnovation.com/user-info/${urlUsername}`;
+        const userInfoUrl = `https://flaap.me/user-info/${urlUsername}`;
 
         await pool.query(`
         UPDATE
@@ -288,7 +288,7 @@ const google = async (req, res, next) => {
             WHERE
             _id=?`, [urlUsername, user[0]._id]);
 
-            const userInfoUrl = `https://flap.esainnovation.com/user-info/${urlUsername}`;
+            const userInfoUrl = `https://flaap.me/user-info/${urlUsername}`;
 
             await pool.query(`
             UPDATE

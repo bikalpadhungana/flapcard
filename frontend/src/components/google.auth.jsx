@@ -15,7 +15,7 @@ export default function OAuth() {
 
         const result = await signInWithPopup(auth, provider);
 
-        const response = await fetch('https://backend-flap.esainnovation.com/api/auth/google', {
+        const response = await fetch('https://backend.flaap.me/api/auth/google', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

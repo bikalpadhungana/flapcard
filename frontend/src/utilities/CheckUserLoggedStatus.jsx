@@ -11,7 +11,7 @@ export default function CheckUserLoggedStatus() {
     useEffect(() => {
 
         const fetchRefreshToken = async () => {
-            const response = await fetch(`https://backend-flap.esainnovation.com/api/token/${refreshToken}`);
+            const response = await fetch(`https://backend.flaap.me/api/token/${refreshToken}`);
 
             const resData = await response.json();
 

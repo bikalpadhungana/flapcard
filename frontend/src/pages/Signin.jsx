@@ -29,7 +29,7 @@ export default function Signin() {
     }
 
     try {
-      const res = await fetch('https://backend-flap.esainnovation.com/api/auth/signin', {
+      const res = await fetch('https://backend.flaap.me/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ export default function Signin() {
             disabled={loading}
             className="bg-[#1c73ba] text-white  py-2 sm:py-3 px-3 rounded-lg  hover:opacity-95 disabled:opacity-80"
           >
-            {loading ? "Loading..." : "Login"}
+            {loading ? "Loading..." : "Sign in"}
           </button>
           <OAuth></OAuth>
         </form>
@@ -108,6 +108,14 @@ export default function Signin() {
             <span className="text-blue-700">Sign up</span>
           </Link>
         </div>
+      
+        <div className="flex gap-2 mt-5">
+  <a href={`https://wa.me/9779802365432`} target="_blank" rel="noopener noreferrer">
+    <h11 className="text-red-700 cursor-pointer">Forgot Password</h11>
+  </a>
+</div>
+
+
 
         {error && <p className="text-red-500 mt-5">{error}</p>}
       </div>

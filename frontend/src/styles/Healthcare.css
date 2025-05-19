@@ -1,0 +1,302 @@
+/* Healthcare Professional Styles */
+:root {
+    --hp-primary: #3fa0ea;
+    --hp-secondary: #5BA4E6;
+    --hp-accent: #d73240;
+    --hp-background: #F8F9FA;
+    --hp-text: #000000;
+  }
+  
+  .hp-profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .hp-profile-header {
+    position: relative;
+    background: var(--hp-primary);
+  }
+  
+  .hp-cover-photo img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    opacity: 0.9;
+  }
+  
+  .hp-profile-main {
+    position: relative;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .hp-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-top: -100px;
+    
+  }
+  
+  .hp-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .hp-organization-logo {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid white;
+    background: white;
+    padding: 5px;
+  }
+  
+  .hp-profile-info {
+    margin-top: 1rem;
+  }
+  
+  .hp-name {
+    color: whitesmoke;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hp-title {
+    color: var(--hp-accent);
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  
+  .hp-organization {
+    color: var(--hp-text);
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+  
+  .hp-contact-section {
+    padding: 2rem;
+    background: var(--hp-background);
+  }
+  
+  .hp-contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hp-contact-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .hp-contact-icon {
+    font-size: 1.8rem;
+    color: var(--hp-secondary);
+    margin-right: 1.5rem;
+  }
+  
+  .hp-contact-details span {
+    display: block;
+    color: var(--hp-text);
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 0.3rem;
+  }
+  
+  .hp-contact-details a {
+    color: var(--hp-primary);
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .hp-action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .hp-primary-button, .hp-secondary-button {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.2s ease;
+  }
+  
+  .hp-primary-button {
+    background: var(--hp-primary);
+    color: white;
+  }
+  
+  .hp-secondary-button {
+    background: var(--hp-secondary);
+    color: white;
+  }
+  
+  .hp-about-section {
+    padding: 2rem;
+    border-top: 2px solid var(--hp-background);
+  }
+  
+  .hp-section-title {
+    color: var(--hp-primary);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--hp-secondary);
+    padding-bottom: 0.5rem;
+  }
+  
+  .hp-social-section {
+    padding: 2rem;
+    background: var(--hp-background);
+  }
+  
+  .hp-social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hp-social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .hp-social-link:hover {
+    transform: translateY(-3px);
+  }
+  
+  .hp-social-link i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hp-footer {
+    background-color: var(--hp-primary);
+    text-align: center;
+    padding: 2rem;
+    color: var(--hp-text);
+    border-top: 1px solid #eee;
+  }
+  
+  .hp-footer a {
+    color: Black;
+    text-decoration: none;
+
+  }
+  
+  /* Modal Styles */
+  .hp-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .hp-modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+  }
+  
+  .hp-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--hp-text);
+  }
+  
+  .hp-modal-title {
+    color: var(--hp-primary);
+    margin-bottom: 1.5rem;
+  }
+  
+  .hp-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .hp-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--hp-text);
+  }
+  
+  .hp-form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .hp-submit-button {
+    background: var(--hp-primary);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hp-profile-container {
+      border-radius: 0;
+    }
+    
+    .hp-avatar {
+      width: 140px;
+      height: 140px;
+    }
+    
+    .hp-name {
+      font-size: 1.8rem;
+    }
+  }
